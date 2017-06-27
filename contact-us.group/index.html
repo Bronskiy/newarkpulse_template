@@ -1,0 +1,65 @@
+{html_head}
+{exp:seo_lite url_title="{segment_1}"}
+{css}
+{js}
+{favicon}
+{html_head_end}
+<body>
+  <div class="container content-bg">
+    {embed="global_embeds/new_header" }
+    {embed="global_embeds/main_menu" loc="contact-us"}
+    <section class="inner-page-contents">
+      <div class="row">
+        <div class="col-lg-8">
+          <section>
+            <div class="row category-caption">
+              <div class="col-lg-12">
+                <h2 class="pull-left">CONTACT US</h2>
+              </div>
+            </div>
+            <div class="row contact-block">
+              <div class="col-lg-12">
+                To send us a message, please fill out the form below.
+                We’ll get back to you shortly!
+              </div>
+            </div>
+            <div class="row contact-form">
+              {exp:freeform:form
+                form_id="1"
+                required="name|email"
+                return="contact-us/thank_you"
+                recipient_template="contact_form"
+                notify_user="yes"
+                user_email_field="user_email"
+              }
+
+              <div id='message_post'></div>
+              <div class="col-lg-6 col-md-6">{freeform:field:name attr:placeholder="Your Name *"}</div>
+              <div class="col-lg-6 col-md-6">{freeform:field:email attr:placeholder="Your Email *"}</div>
+
+              <div class="col-lg-12 col-md-12">{freeform:field:user_message attr:placeholder="Your Message *"}</div>
+
+              {if freeform:captcha}
+              <div class="col-lg-12"><p>Please enter the word you see in the image below:</p></div>
+              <div class="col-lg-3 col-md-3">{freeform:captcha}</div>
+              <div class="col-lg-3 col-md-3"><input type="text" name="captcha" /></div>
+              {/if}
+
+              <div class="col-lg-12">{freeform:submit}</div>
+
+              {/exp:freeform:form}
+            </div>
+            You can email us at Info@newarkpulse.com or call 862-227-2804
+          </section>
+        </div>
+        <div class="col-lg-4">
+          {embed="global_embeds/tabs_sidebar"}
+        </div>
+      </div>
+    </section>
+    {embed="global_embeds/new_footer"}
+    <a href="#" class="scrollup">Scroll</a>
+  </div>
+  {js_footer}
+  {analytics}
+  {html_close}

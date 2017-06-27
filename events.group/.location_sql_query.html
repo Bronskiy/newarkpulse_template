@@ -1,0 +1,11 @@
+{exp:query sql="SELECT
+							    nap_relationships.parent_id,
+							    nap_relationships.field_id
+							    FROM
+							    nap_relationships
+							    WHERE
+							    nap_relationships.field_id = 51
+							    and
+							    nap_relationships.parent_id = {embed:parent}" cache="yes" refresh="48000"}
+							    {if no_results}{if embed:loc != ''}<p><i class="fa fa-map-marker"></i>{if embed:segment == "event"} <b>Location:</b> {/if}{embed:loc}</p>{/if}{/if}
+							    {/exp:query}

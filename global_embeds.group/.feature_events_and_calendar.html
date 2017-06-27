@@ -1,0 +1,195 @@
+						<div class="row">
+							<div class="col-md-5 col-sm-12">
+								<div class="row category-caption">
+									<div class="col-lg-12">
+										<h2 class="pull-left">EVENT CALENDAR</h2>
+									</div>
+								</div>
+								{exp:calendar:cal
+									<!-- a lot of URI values are possible here, so hang on for conditional madness -->
+									{if segment_2 == "calendars"}
+									date_range_start="year-month-01"
+									date_range_end="year-month-last"
+									{/if}
+									{if segment_2 == "edit"}
+									date_range_start="year-month-01"
+									date_range_end="year-month-last"
+									{/if}
+									{if segment_2 == "create"}
+									date_range_start="year-month-01"
+									date_range_end="year-month-last"
+									{/if}
+									{if segment_2 == "event"}
+									date_range_start="year-month-01"
+									date_range_end="year-month-last"
+									{/if}
+									{if segment_2 == ""}
+									date_range_start="year-month-01"
+									date_range_end="year-month-last"
+									{/if}
+									{if segment_2 == "month"}
+									{if segment_3 == ''}
+									date_range_start="year-month-01"
+									date_range_end="year-month-last"
+									{/if}
+									{if segment_3 != ''}
+									date_range_start="{segment_3}-{segment_4}-01"
+									date_range_end="{segment_3}-{segment_4}-last"
+									{/if}
+									{/if}
+									{if segment_2 == "week"}
+									{if segment_3 == ''}
+									date_range_start="year-month-01"
+									date_range_end="year-month-last"
+									{/if}
+									{if segment_3 != ''}
+									date_range_start="{segment_3}-{segment_4}-01"
+									date_range_end="{segment_3}-{segment_4}-last"
+									{/if}
+									{/if}
+									{if segment_2 == "day"}
+									{if segment_3 == ''}
+									date_range_start="year-month-01"
+									date_range_end="year-month-last"
+									{/if}
+									{if segment_3 != ''}
+									date_range_start="{segment_3}-{segment_4}-01"
+									date_range_end="{segment_3}-{segment_4}-last"
+									{/if}
+									{/if}
+									dynamic="off"
+									cache="yes"
+									refresh="48000"
+								}
+
+								{display_each_month}
+								<div id="mc_calendar">
+									<table class="table table-bordered">
+										<thead>
+											<tr>
+												<th colspan="1">{if segment_2 != "calendars"}<a id="mc_prev_month" class="icon left" href="{path='events'}/month/{prev_month format="%Y/%m"}/">&larr;</a>{/if}</th>
+												<th colspan="5"><a href="{path='events/month'}/{month format="%Y/%m"}/">{month format="%F %Y"}</a></th>
+												<th colspan="1">{if segment_2 != "calendars"}<a id="mc_next_month" class="icon right" href="{path='events'}/month/{next_month format="%Y/%m"}/"> &rarr;</a>{/if}</th>
+											</tr>
+											<tr id="mc_days">
+												{display_each_day_of_week}
+												<th>{day_of_week_one}</th>
+												{/display_each_day_of_week}
+											</tr>
+										</thead>
+										<tbody>
+											{display_each_week}
+											<tr>
+												{display_each_day}
+												<td cellpadding="0" cellspacing="0" class="
+												{if day_in_current_month == FALSE}mc_pad{/if}
+												{if day_event_total > 0}has_events{/if}
+												{if count == 7}selected{/if}
+												{if day_is_today}today{/if}
+												"><div class="mc_date">
+													{if day_in_current_month}
+													{if day_event_total}
+													<a href="{path='events/day'}/{day format="%Y/%m/%d"}/">
+														{/if}
+														{day}
+														{if day_event_total}</a>{/if}
+														{if:else}
+														<strong class="middot">&nbsp;</strong>
+														{/if}
+													</div>
+												</td>
+												{/display_each_day}
+											</tr>
+											{/display_each_week}
+										</tbody>
+									</table>
+								</div>
+								{/display_each_month}
+								{/exp:calendar:cal}
+							</div>
+							<div class="col-md-7 col-sm-12">
+								<section>
+									<div class="row category-caption">
+										<div class="col-lg-12">
+											<h2 class="pull-left">FEATURED EVENTS</h2>
+										</div>
+									</div>
+									<div>
+										<ul class="tabs-posts">
+											{exp:calendar:events
+												orderby="event_start_date"
+												sort="asc"
+												event_limit="4"
+												date_range_start="today"
+												show_months="3"
+												dynamic="off"
+												status="featured"
+												cache="yes"
+												refresh="48000"
+											}
+											<li>
+												<div class="info">
+													<span class="date"><i class="fa fa-calendar-o"></i>
+														{event_first_date format="%F %j, %Y"}
+														{if event_all_day}
+														(all day)
+														{if:else}
+														at {event_first_date format="%g:%i%a"}
+														{if event_never_ends}
+														(never ends)
+														{if:else}
+														{if "{event_first_date format='%Y%m%d%g%i%a'}" != "{event_last_date format='%Y%m%d%g%i%a'}"}
+														<b class="text-info">-</b>
+														{if "{event_first_date format='%Y%m%d'}" != "{event_last_date format='%Y%m%d'}"}
+														{event_last_date format="%F %j, %Y at %g:%i%a"}
+														{if:else}
+														{event_last_date format="%g:%i%a"}
+														{/if}
+														{/if}
+														{/if}
+														{/if}
+													</span>
+												</div>
+												<div class="caption"><a href="{path='events/event'}/{event_id}/{event_url_title}/{if event_recurs}{event_start_date format="%Y/%m/%d"}/{/if}">{title}</a></div>
+											</li>
+											{/exp:calendar:events}
+										</ul>
+									</div>
+								</section>
+							</div>
+
+							{!-- <div class="col-md-1 hidden-sm">
+							</div>
+							<div class="col-md-6 col-sm-12">
+								<section>
+									<div class="row category-caption">
+										<div class="col-lg-12">
+											<h2 class="pull-left">SEARCH EVENTS</h2>
+										</div>
+									</div>
+									<div>
+										{exp:search:advanced_form channel="calendar_events" result_page="search/results"}
+
+										<label>Event Name</label>
+										<input type="text" class="input" maxlength="100" size="40" name="keywords" style="width:100%;" />
+
+										<select id="channel_id" name='channel_id[]' class='multiselect hidden' size='12' multiple='multiple' onchange='changemenu(this.selectedIndex);'>
+											<option value="2" selected="selected">Calendar: Events</option>
+										</select>
+
+										<label>Category</label>
+										<select name='cat_id[]' size='4'  class='multiselect' multiple='multiple'>
+											<option value='all' >{lang:any_category}</option>
+										</select>
+
+										<input type='submit' value='Search' class='submit' />
+										{/exp:search:advanced_form}
+
+									</div>
+								</section>
+							</div>--}
+						</div>
+						<div class="row next-n-prev">
+							<div class="col-lg-12"><div class="btns"><a href="/events/create">ADD YOUR EVENT</a></div></div>
+						</div>
+						<hr>

@@ -1,0 +1,112 @@
+<div id="mobile-header">
+	<a id="responsive-menu-button" href="#sidr-main"><span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></a>
+	<div class="col-lg-2 col-md-2 logo"><a href="/"><img src="/assets/images/logo.png" alt="{site_name}"></a></div>
+</div>
+<div id="mobile-navigation">
+	<nav class="nav">
+		<form role="form" method="post" action="{path='search/results'}">
+			{exp:super_search:search}
+			<div class="hidden-lg hidden-md visible-sm-block">
+				<div class="nav-icon pull-right">
+					<input type="search" name="keywords" id="keywords-mobile" value="" maxlength="100" class="s" placeholder="Search...">
+				</div>
+			</div>
+			{/exp:super_search:search}
+		</form>
+		{exp:navee:nav nav_title='sidebar_menu' class="nav navbar-nav" kids_class='dropdown-menu|second|third'}
+	</nav>
+</div>
+<nav id="navigation">
+	<div class="navbar yamm navbar-inverse" role="navigation">
+		<div class="row">
+			<div class="col-lg-2 col-md-2 hidden-xs logo"><a href="/"><img src="/assets/images/logo.png" alt="{site_name}"></a></div>
+			<div class="col-lg-10 col-md-10">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" > <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+				</div>
+				<div class="collapse navbar-collapse">
+
+					{!--
+						<ul class="nav navbar-nav">
+							{exp:channel:entries channel="menu" status="open" sort="asc" orderby="menu_order" dynamic="off" cache="yes" refresh="48000"}
+							{if menu_order !=0}
+							<li class="dropdown yamm-fw {menu_mobile}{item}{/menu_mobile}">
+								<a class="dropdown-link" href="{if menu_link !=''}{menu_link}{if:else}{url_title_path=content}{/if}"><span>{title}</span></a>
+								{if menu_channel_categories}
+								{exp:gwcode_categories channel="{menu_channel_categories}" style="linear" depth="1"}
+								{if cat_count == 1}<ul class="dropdown-menu">
+									<li>
+										<div class="yamm-content">
+											<div class="row">
+												<ul class="mega-links">
+													{/if}
+													<li><a href="{menu_link}/category/{output_path}">{cat_name}</a></li>
+													{if cat_count == results_total}
+													<li><a href="/business/create">Add New Business</a></li>
+												</ul>
+											</div>
+										</div>
+									</li>
+								</ul>{/if}
+								{/exp:gwcode_categories}
+								{if:elseif entry_id == "113746"}
+								<ul class="dropdown-menu">
+									<li>
+										<div class="yamm-content">
+											<div class="row">
+												<ul class="mega-links">
+													{embed="global_embeds/special_categories_links}
+												</ul>
+											</div>
+										</div>
+									</li>
+								</ul>
+								{if:else}
+								{menu_children}
+								{menu_children:parents field="menu_children"}
+								{if menu_children:count == 1}
+								<ul class="dropdown-menu">
+									<li>
+										<div class="yamm-content">
+											<div class="row">
+												<ul class="mega-links">
+													{/if}
+													<li><a href="{if menu_children:menu_link !=''}{menu_children:menu_link}{if:else}{menu_children:url_title_path=content}{/if}">{menu_children:title}</a></li>
+													{if menu_children:count == menu_children:total_results}
+												</ul>
+											</div>
+										</div>
+									</li>
+								</ul>
+								{/if}
+								{/menu_children:parents}
+								{/menu_children}
+								{/if}
+							</li>
+							{/if}
+							{/exp:channel:entries}
+						</ul>
+						--}
+						{exp:navee:nav nav_title='main_menu' class="nav navbar-nav" kids_class='dropdown-menu|second|third'}
+
+						<div class="search-dropdown-content">
+							<div class="page-container">
+								<div class="header-search-form">
+									<form id="filter" accept-charset="UTF-8" action="{path='search/results'}" method="post">
+										{exp:super_search:search}
+										<div class="ie-search-wrapper">
+											<input type="search" autocomplete="off" name="keywords" id="keywords" value="" maxlength="100" class="header-search s" placeholder="Search...">
+										</div>
+										<input class="btn btn-primary header-search-submit" name="commit" id="header-search" type="submit" value="Search">
+										{/exp:super_search:search}
+									</form>
+									<div class="header-search-results" id="header-results"></div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</nav>

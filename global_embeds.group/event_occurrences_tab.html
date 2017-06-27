@@ -1,0 +1,58 @@
+<div class="tabs">
+									<div role="tabpanel">
+										<ul class="nav nav-tabs nav-justified" role="tablist">
+											<li role="presentation" class="active"><a href="#upcoming" aria-controls="first" role="tab" data-toggle="tab" aria-expanded="true">UPCOMING OCCURRENCES</a></li>
+											<li role="presentation" class=""><a href="#past" aria-controls="second" role="tab" data-toggle="tab" aria-expanded="false">PAST OCCURRENCES</a></li>
+										</ul>
+										<div class="tab-content">
+											<div role="tabpanel" class="tab-pane active" id="upcoming">
+												<div class="description">
+													{exp:calendar:occurrences
+														event_id="{segment_3}"
+														date_range_start="today"
+														date_range_end="3 months"
+														upcoming_occurrences_limit="5"
+														prior_occurrences_limit="0"
+														dynamic="off"
+													  cache="yes"
+														refresh="48000"
+													}
+													{if occurrence_count == "1"}<ul class="list-group" style="margin-bottom:0px;">{/if}
+														<li class="list-group-item">
+															<a href="{path='events/day'}/{occurrence_start_date format="%Y/%m/%d"}/" class="badge">more events this day</a>
+															{occurrence_start_date format="%l, %F %j, %Y at %g:%i%a"}{if "{occurrence_start_date format='%Y%m%d%g%i%a'}" != "{occurrence_end_date format='%Y%m%d%g%i%a'}"} - {if "{occurrence_start_date format='%Y%m%d'}" != "{occurrence_end_date format='%Y%m%d'}"}{occurrence_end_date format="%l, %F %j, %Y at %g:%i%a"}{if:else}{occurrence_end_date format="%g:%i%a"}{/if}{/if}
+														</li>
+														{if occurrence_count == occurrence_total}</ul>{/if}
+														{if no_results}
+														No upcoming occurrences in the timeframe specified (next 3 months from todays' date) for this event.
+														{/if}
+														{/exp:calendar:occurrences}
+													</div>
+												</div>
+												<div role="tabpanel" class="tab-pane" id="past">
+													<div class="description">
+														{exp:calendar:occurrences
+															event_id="{segment_3}"
+															date_range_start="3 months ago"
+															date_range_end="today"
+															upcoming_occurrences_limit="0"
+															prior_occurrences_limit="5"
+															dynamic="off"
+														  cache="yes"
+															refresh="48000"
+														}
+														{if occurrence_count == "1"}<ul class="list-group" style="margin-bottom:0px;">{/if}
+															<li class="list-group-item">
+																<a href="{path='events/day'}/{occurrence_start_date format="%Y/%m/%d"}/" class="badge">more events this day</a>
+																{occurrence_start_date format="%l, %F %j, %Y at %g:%i%a"}{if "{occurrence_start_date format='%Y%m%d%g%i%a'}" != "{occurrence_end_date format='%Y%m%d%g%i%a'}"} - {if "{occurrence_start_date format='%Y%m%d'}" != "{occurrence_end_date format='%Y%m%d'}"}{occurrence_end_date format="%l, %F %j, %Y at %g:%i%a"}{if:else}{occurrence_end_date format="%g:%i%a"}{/if}{/if}
+															</li>
+															{if occurrence_count == occurrence_total}</ul>{/if}
+															{if no_results}
+															No past occurrences in the timeframe specified (past 3 months from todays' date) for this event.
+															{/if}
+															{/exp:calendar:occurrences}
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>

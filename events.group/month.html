@@ -1,0 +1,165 @@
+{html_head}
+{exp:seo_lite url_title="{segment_1}"}
+{css}
+{js}
+{favicon}
+{html_head_end}
+<body>
+	<div class="container content-bg">
+		{embed="global_embeds/new_header" }
+		{embed="global_embeds/main_menu" loc="type"}
+		<section class="inner-page-contents">
+			<div class="row">
+				<div class="col-lg-8">
+					<section class="category">
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="row category-caption">
+									<div class="col-lg-12">
+										<h2 class="pull-left">EVENT CALENDAR</h2>
+									</div>
+								</div>
+								{if segment_3 == "by_calendar"}
+								<div class="alert alert-info" role="alert">
+									<p class="lead">
+										Events for
+										{exp:calendar:calendars calendar_name="{segment_4}" dynamic="off"}
+										<strong>{calendar_title}</strong>
+										{/exp:calendar:calendars}
+										calendar.
+									</p>
+								</div>
+								{/if}
+
+								<div class="text-center">
+									<div class="btn-group btn-group-sm" role="group" aria-label="...">
+										{exp:calendar:month_list
+											date_range_start="5 months ago"
+											date_range_end="5 months"
+											limit="15"
+										}
+										<a href="{path='events/month'}/{month format="%Y/%m"}/" class="btn btn-default">{month format="%M %Y"}</a>
+										{/exp:calendar:month_list}
+									</div>
+								</div>
+
+								<div id="fc_calendar">
+									{exp:calendar:cal
+										{if segment_3 == "by_calendar"}
+										{if segment_5 == ''}
+										calendar_name="{segment_4}"
+										date_range_start="year-month-01"
+										date_range_end="year-month-last"
+										{/if}
+										{if segment_5 != ''}
+										calendar_name="{segment_4}"
+										date_range_start="{segment_5}-{segment_6}-01"
+										date_range_end="{segment_5}-{segment_6}-last"
+										{/if}
+										{/if}
+										{if segment_3 != "by_calendar"}
+										{if segment_3 == ''}
+										date_range_start="year-month-01"
+										date_range_end="year-month-last"
+										{/if}
+										{if segment_3 != ""}
+										date_range_start="{segment_3}-{segment_4}-01"
+										date_range_end="{segment_3}-{segment_4}-last"
+										{/if}
+										{/if}
+										status="open|featured"
+										 cache="yes"
+										 refresh="48000"
+									}
+									{display_each_month}
+									<table id="fc_outer">
+										<thead>
+											<tr id="month_year">
+												<th colspan="2" class="left">
+													<ul class="pager">
+														<li><a href="{path='events/month'}/{if segment_3 == "by_calendar"}by_calendar/{segment_4}/{/if}{prev_month format="%Y/%m"}/">&larr; {prev_month format="%F"}</a></li>
+													</ul>
+												</th>
+												<th colspan="3" class="center">
+													<h3>
+														{month format="%F %Y"}
+														<span class="label {if month_event_total == "0"}label-default{if:else}label-warning{/if}">{month_event_total} event{if month_event_total > "1" OR month_event_total == "0"}s{/if}</span>
+													</h3>
+												</th>
+												<th colspan="2" class="right">
+													<ul class="pager">
+														<li><a href="{path='events/month'}/{if segment_3 == "by_calendar"}by_calendar/{segment_4}/{/if}{next_month format="%Y/%m"}/">{next_month format="%F"} &rarr;</a></li>
+													</ul>
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td colspan="7">
+													<table id="fc_inner" class="table table-bordered">
+														<thead>
+															<tr id="days_of_week" class="active">
+																{display_each_day_of_week}
+																<th class="day_of_week {day_of_week}">{day_of_week}</th>
+																{/display_each_day_of_week}
+															</tr>
+														</thead>
+														<tbody>
+															{display_each_week}
+															<tr>
+																{display_each_day}
+																{if day_in_current_month}
+																<td class="day_cell{if day_is_today} today{/if}"><div class="date{if day_event_total != "0"} has_events{/if}"><a class="num" href="{path='events/day'}/{if segment_3 == "by_calendar"}by_calendar/{segment_4}/{/if}{day format="%Y/%m/%d"}/">{day format="%j"}</a></div>
+																	{if:else}
+																	<td class="day_cell out_of_range"><div class="date"><span class="num">{day format="%j"}</span></div>
+																		{/if}
+																		{events}
+																		<div class="
+																		event {if event_all_day}all_day{/if}
+																		{if event_multi_day}multi_day{/if}
+																		{if event_first_day}first_day{/if}
+																		{if event_last_day}last_day{/if}
+																		">
+																		{if event_multi_day}
+																		{if event_all_day == FALSE}
+																		{if event_first_day}
+																		{event_start_date format="%g"}{if event_start_minute > 0}:{event_start_minute}{/if}{event_start_date format="%a"}
+																		{/if}
+																		{if event_last_day}
+																		{event_end_date format="%g"}{if event_end_minute > 0}:{event_end_minute}{/if}{event_end_date format="%a"}
+																		{/if}
+																		{/if}
+																		<a href="{path='events/event'}/{event_id}/{event_url_title}/{if event_recurs}{event_start_date format="%Y/%m/%d"}/{/if}" class="tips" data-toggle="tooltip" data-placement="top" title="{event_title}">{if event_first_day OR event_last_day}{event_title}{if:else}&nbsp;{/if}</a>
+																		{if:else}
+																		{if event_all_day == ''}
+																		{event_start_date format="%g"}{if event_start_minute > 0}:{event_start_minute}{/if}{if event_end_time != event_start_time && event_end_time != '00:00'}&ndash;{event_end_date format="%g"}{if event_end_minute > 0}:{event_end_minute}{/if}{event_end_date format="%a"}{if:else}{event_start_date format="%a"}{/if}
+																		{/if}
+																		<a href="{path='events/event'}/{if edited_occurrence}{event_parent_id}{if:else}{event_id}{/if}/{event_url_title}/{if event_recurs}{event_start_date format="%Y/%m/%d"}/{/if}" class="tips" data-toggle="tooltip" data-placement="top" title="{event_title}">{event_title}</a>
+																		{/if}
+																	</div>
+																	{/events}
+																</td>
+																{/display_each_day}
+															</tr>
+															{/display_each_week}
+														</tbody>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+									{/display_each_month}
+									{/exp:calendar:cal}
+								</div>
+							</section>
+						</div>
+						<div class="col-lg-4">
+							{embed="global_embeds/tabs_sidebar"}
+						</div>
+					</div>
+				</section>
+				{embed="global_embeds/new_footer"}
+			</div>
+			{js_footer}
+			{analytics}
+			{html_close}

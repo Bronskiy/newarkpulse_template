@@ -1,0 +1,43 @@
+<!-- RIGHT COLUMN STARTS -->
+        <div class="col-lg-4">
+          <!-- TABS STARTS -->
+          <div class="tabs">
+            <div role="tabpanel">
+              <!-- Nav tabs -->
+              <ul class="nav nav-tabs nav-justified" role="tablist">
+                <li role="presentation" class="active"><a href="#categories" aria-controls="popular" role="tab" data-toggle="tab">CATEGORIES</a></li>
+                <li role="presentation"><a href="#latest" aria-controls="popular" role="tab" data-toggle="tab">LATEST</a></li>
+              </ul>
+              <!-- Tab panes -->
+              <div class="tab-content">
+                <!-- Categories Starts -->
+                <div role="tabpanel" class="tab-pane active" id="categories">
+                  <div class="categories">
+                    <ul class="cats">
+                      {exp:channel:categories channel="news" style="linear" backspace="7"}
+                      <li><a href="{path='news'}">{category_name}</a></li>
+                      {/exp:channel:categories}</ul>
+                  </div>
+                </div>
+                <!-- Categories Ends -->
+                <!-- Popular Starts -->
+                <div role="tabpanel" class="tab-pane" id="latest">
+                  <ul class="tabs-posts">
+                    {exp:channel:entries channel="news" limit="3" status="open|featured|sponsored" disable="member_data|category_fields|pagination" dynamic="off"}
+                    <li>
+                      <div class="pic"><img src="{news_intro_image:tumb}" class="img-responsive" alt="{title}" ></div>
+                      <div class="info">
+                        <span class="date"><i class="fa fa-calendar-o"></i> {entry_date format="%m/%d/%Y"}</span>
+                      </div>
+                      <div class="caption"><a href="#">{title}</a></div>
+                    </li>
+                    {/exp:channel:entries}
+                  </ul>
+                </div>
+                <!-- Popular Ends -->
+              </div>
+            </div>
+          </div>
+          <!-- TABS ENDS -->
+        </div>
+        <!-- /. RIGHT COLUMN ENDS -->

@@ -1,0 +1,140 @@
+{html_head}
+{exp:seo_lite url_title="{segment_2}"}
+{css}
+{js}
+{favicon}
+{html_head_end}
+<body>
+  <div class="container content-bg">
+    {embed="global_embeds/new_header" }
+    {embed="global_embeds/main_menu" loc="home"}
+    {if segment_2 != ""}
+    {exp:channel:entries channel="special_category" status="open" cache="yes" refresh="48000"}
+    {if no_results}{redirect="404"}{/if}
+    <section class="page-contents">
+      <div class="row">
+        <div class="col-lg-8">
+          <section class="category">
+            <div class="row category-caption">
+              <div class="col-lg-12">
+                <h1 class="pull-left sub-cat">{title}</h1>
+              </div>
+            </div>
+            {if special_category_header_image}
+            <div class="row">
+              <article class="col-lg-12 col-md-12">
+                <div class="picture">
+                  <div class="category-image">
+                    <img src="{special_category_header_image:large}" class="img-responsive" alt="{title}">
+                    <h2 class="overlay-category">{title}</h2>
+                  </div>
+                </div>
+                {if special_category_description}
+                <div class="description">
+                  {special_category_description}
+                </div>
+                {/if}
+                <div class="clearfix"></div>
+              </article>
+            </div>
+            {/if}
+            <div class="row">
+              {parents field="news_special_category" status="open|featured|sponsored" orderby="date" sort="desc" cache="yes" refresh="48000"}
+              {if no_results}<article class="col-lg-6 col-md-6">Empty category</article>{/if}
+              <article class="col-lg-4 col-md-4">
+                <div class="picture">
+                  <div class="category-image">
+                    {if parents:news_image}
+                    <a href="{parents:url_title_path=news/detail}"><img src="{parents:news_image:small}" class="img-responsive" alt="{parents:title}" ></a>
+                    {if:else}
+                    <a href="{parents:url_title_path=news/detail}"><img src="{theme_path}images/demo_image.png" class="img-responsive" alt="{parents:title}" ></a>
+                    {/if}
+                    <h2 class="overlay-category">{parents:categories}{category_name}{/parents:categories}</h2>
+                  </div>
+                </div>
+                <div class="detail">
+                  <div class="info">
+                    <span class="date"><i class="fa fa-calendar-o"></i> {parents:entry_date format="%m/%d/%Y"}</span>
+                  </div>
+                  <div class="caption"><a href="{parents:url_title_path=news/detail}">{parents:title}</a></div>
+                  {if parents:news_summary}
+                  <div class="small-caption"><a href="{parents:url_title_path=news/detail}">{parents:news_summary}</a></div>
+                  {if:else}
+                  <div class="small-caption">
+                    <a href="{parents:url_title_path=news/detail}">
+                      {exp:snippet total="100" word="true" ellipsis="..."}
+                      {parents:news_body}
+                      {/exp:snippet}
+                    </a>
+                  </div>
+                  {/if}
+                </div>
+              </article>
+              {if parents:count%3 == 0}<div class="clearfix visible-lg-block visible-md-block"></div>{/if}
+              {/parents}
+            </div>
+          </section>
+        </div>
+        {/exp:channel:entries}
+        {if:else}
+        <section class="page-contents">
+          <div class="row">
+            <div class="col-lg-8">
+              <section class="category">
+                {exp:channel:entries channel="special_category" status="open" orderby="title" sort="asc"  cache="yes" refresh="48000"}
+                {if no_results}{redirect="404"}{/if}
+                <div class="row category-caption">
+                  <div class="col-lg-12">
+                    <h2 class="pull-left main-caption"><a href="{url_title_path=guides}">{title}</a></h2>
+                  </div>
+                </div>
+                <div class="row">
+                  {if count == 1}<h1 class="semantic">Special Guides</h1>{/if}
+                  {parents field="news_special_category" limit="3" status="open|featured|sponsored" cache="yes" refresh="48000"}
+                  {if no_results}<article class="col-lg-6 col-md-6">Empty category</article>{/if}
+                  <article class="col-lg-4 col-md-4">
+                    <div class="picture">
+                      <div class="category-image">
+                        {if parents:news_image}
+                        <a href="{parents:url_title_path=news/detail}"><img src="{parents:news_image:small}" class="img-responsive" alt="{parents:title}" ></a>
+                        {if:else}
+                        <a href="{parents:url_title_path=news/detail}"><img src="{theme_path}images/demo_image.png" class="img-responsive" alt="{parents:title}" ></a>
+                        {/if}
+                        <h2 class="overlay-category">{parents:categories}{category_name}{/parents:categories}</h2>
+                      </div>
+                    </div>
+                    <div class="detail">
+                      <div class="info">
+                        <span class="date"><i class="fa fa-calendar-o"></i> {parents:entry_date format="%m/%d/%Y"}</span>
+                      </div>
+                      <div class="caption"><a href="{parents:url_title_path=news/detail}">{parents:title}</a></div>
+                      {if parents:news_summary}
+                      <div class="small-caption"><a href="{parents:url_title_path=news/detail}">{parents:news_summary}</a></div>
+                      {if:else}
+                      <div class="small-caption">
+                        <a href="{parents:url_title_path=news/detail}">
+                          {exp:snippet total="100" word="true" ellipsis="..."}
+                          {parents:news_body}
+                          {/exp:snippet}
+                        </a>
+                      </div>
+                      {/if}
+                    </div>
+                  </article>
+                  {if parents:count%3 == 0}<div class="clearfix visible-lg-block visible-md-block"></div>{/if}
+                  {/parents}
+                </div>
+                {/exp:channel:entries}
+              </section>
+            </div>
+            {/if}
+            <div class="col-lg-4">
+              {embed="global_embeds/tabs_sidebar"}
+            </div>
+          </div>
+        </section>
+        {embed="global_embeds/new_footer"}
+      </div>
+      {js_footer}
+  		{analytics}
+      {html_close}

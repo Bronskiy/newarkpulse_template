@@ -1,0 +1,166 @@
+{html_head}
+{exp:seo_lite url_title="{segment_1}"}
+{css}
+<link rel="stylesheet" type="text/css" media="all" href="{stylesheet='global_embeds/.calendar_css' }" />
+{js}
+{favicon}
+{html_head_end}
+<body>
+	<div class="container content-bg">
+		{embed="global_embeds/new_header" }
+		{embed="global_embeds/main_menu" loc="type"}
+		<section class="inner-page-contents">
+			<div class="row">
+				<div class="col-lg-8">
+					<section class="category">
+						{embed="global_embeds/.feature_events_and_calendar" }
+
+						<div class="row category-caption">
+							<div class="col-lg-12">
+								{exp:channel:category_heading channel="calendar_events"
+								cache="yes"
+								refresh="48000"}
+								{exp:gwcode_categories cat_id="{parent_id}" style="linear" show_trail="yes"}
+								<h2 class="pull-left main-caption"><a href="{output_path}">{cat_name}</a></h2>
+								{/exp:gwcode_categories}
+								<h2 class="pull-left sub-cat">{category_name}</h2>
+								{/exp:channel:category_heading}
+							</div>
+						</div>
+
+						{if segment_3 == "by_calendar"}
+						<div class="alert alert-info" role="alert">
+							<p class="lead">
+								Events for
+								{exp:calendar:calendars calendar_name="{segment_4}" dynamic="off"
+								cache="yes"
+								refresh="48000"}
+								<strong>{calendar_title}</strong>
+								{/exp:calendar:calendars}
+								calendar.
+							</p>
+						</div>
+						{/if}
+
+						{exp:calendar:cal pad_short_weeks="n"
+						{if segment_3 == "by_calendar"}
+						{if segment_5 == ''}
+						calendar_name="{segment_4}"
+						date_range_start="today"
+						date_range_end="today"
+						{/if}
+						{if segment_5 != ''}
+						calendar_name="{segment_4}"
+						date_range_start="{segment_5}-{segment_6}-{segment_7}"
+						date_range_end="{segment_5}-{segment_6}-{segment_7}"
+						{/if}
+						{/if}
+						{if segment_3 != "by_calendar"}
+						{if segment_3 == ''}
+						date_range_start="today"
+						date_range_end="today"
+						{/if}
+						{if segment_3 != ""}
+						date_range_start="{segment_3}-{segment_4}-{segment_5}"
+						date_range_end="{segment_3}-{segment_4}-{segment_5}"
+						{/if}
+						{/if}
+						status="open|featured"
+						dynamic="off"
+						cache="yes"
+						refresh="48000"
+					}
+					{display_each_day}
+					<section>
+						<div class="row category-caption">
+							<div class="col-lg-12">
+								<h2 class="pull-left main-caption">{day format="%l, %F %j, %Y"}</h2>
+								<h2 class="pull-left sub-cat {if day_event_total == "0"}label-default{if:else}label-warning{/if}">{day_event_total} event{if day_event_total > "1" OR day_event_total == "0"}s{/if}</h2>
+							</div>
+						</div>
+						<div class="row next-n-prev">
+							<div class="col-lg-6 col-md-6 col-sm-6">
+								<div class="detail">
+									<div class="events-page btns"><a href="{path='events/day'}/{if segment_3 == "by_calendar"}by_calendar/{segment_4}/{/if}{prev_day format="%Y/%m/%d"}/"><i class="fa fa-angle-double-left"></i> PREVIOUS</a></div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-sm-6">
+								<div class="detail">
+									<div class="events-page btns"><a href="{path='events/day'}/{if segment_3 == "by_calendar"}by_calendar/{segment_4}/{/if}{next_day format="%Y/%m/%d"}/">NEXT <i class="fa fa-angle-double-right"></i></a></div>
+								</div>
+							</div>
+						</div>
+					</section>
+					<hr>
+					<div class="row">
+						{if hour_event_total == "0"}
+						No events for this hour.
+						{/if}
+						{events}
+						{if event_multi_day == FALSE && event_all_day == FALSE}
+						{if event_count == "1"}{/if}
+						<article class="col-lg-4 col-md-4">
+							<div class="picture">
+								<div class="category-image">
+									{if event_image}
+									<a href="{path='events/event'}/{event_id}/{event_url_title}/{if event_recurs}{event_start_date format="%Y/%m/%d"}/{/if}"><img src="{event_image}" class="img-responsive" alt="{business_listing_images:alt_attribute}" ></a>
+									{if:else}
+									<a href="{path='events/event'}/{event_id}/{event_url_title}/{if event_recurs}{event_start_date format="%Y/%m/%d"}/{/if}"><img src="/assets/images/demo_image.png" class="img-responsive" alt="{title}" ></a>
+									{/if}
+									<h2 class="overlay-category">START: {event_start_date format="%g:%i %a"}</h2>
+								</div>
+							</div>
+							<div class="detail">
+								<div class="caption"><a href="{path='events/event'}/{event_id}/{event_url_title}/{if event_recurs}{event_start_date format="%Y/%m/%d"}/{/if}">{event_title}</a></div>
+								<div class="info">
+									{!-- {if event_multi_day == FALSE && event_all_day == TRUE}all day{if:else}started {event_start_date format="%F %j, %Y"}{if event_end_date}{if "{event_start_date format='%g:%i%a'}" != "{event_end_date format='%g:%i%a'}"} - {event_end_date format="%F %j, %Y at %g:%i%a"}{/if}{/if}{/if}</br>--}
+									{embed="events/.location_sql_query" parent="{entry_id}" loc="{event_location}"}
+									{event_related_business status="open|featured|sponsored"}
+									{if event_related_business:count == '1'}
+									<p><i class="fa fa-map-marker"></i> {event_related_business:title}</p>
+									{/if}
+									{/event_related_business}
+								</div>
+							</div>
+						</article>
+						{if:else}
+						<article class="col-lg-4 col-md-4">
+							<div class="picture">
+								<div class="category-image">
+									{if event_image}
+									<a href="{path='events/event'}/{event_id}/{event_url_title}/{if event_recurs}{event_start_date format="%Y/%m/%d"}/{/if}"><img src="{event_image:small}" class="img-responsive" alt="{business_listing_images:alt_attribute}" ></a>
+									{if:else}
+									<a href="{path='events/event'}/{event_id}/{event_url_title}/{if event_recurs}{event_start_date format="%Y/%m/%d"}/{/if}"><img src="/assets/images/demo_image.png" class="img-responsive" alt="{title}" ></a>
+									{/if}
+									<h2 class="overlay-category">START: {event_start_date format="%g:%i %a"}</h2>
+								</div>
+							</div>
+							<div class="detail">
+								<div class="caption"><a href="{path='events/event'}/{event_id}/{event_url_title}/{if event_recurs}{event_start_date format="%Y/%m/%d"}/{/if}">{event_title}</a></div>
+								<div class="info">
+									{!--{if event_multi_day == FALSE && event_all_day == TRUE}all day{if:else}started {event_start_date format="%F %j, %Y"}{if event_end_date}{if "{event_start_date format='%g:%i%a'}" != "{event_end_date format='%g:%i%a'}"} - {event_end_date format="%F %j, %Y at %g:%i%a"}{/if}{/if}{/if}</br>--}
+									{if event_location}<p><i class="fa fa-map-marker"></i> {event_location}</p></br>{/if}
+								</div>
+							</div>
+						</article>
+						{/if}
+						{if event_count%3 == 0}<div class="clearfix visible-lg-block visible-md-block"></div>{/if}
+						{/events}
+						{/display_each_day}
+						{/exp:calendar:cal}
+					</div>
+				</section>
+			</div>
+			<div class="col-lg-4">
+				{embed="global_embeds/tabs_sidebar"}
+			</div>
+		</div>
+	</section>
+	{embed="global_embeds/new_footer"}
+</div>
+{js_footer}
+<script>
+$("#channel_id option[value='2']").change();
+</script>
+{analytics}
+{html_close}

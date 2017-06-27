@@ -1,0 +1,68 @@
+{html_head}
+{exp:seo_lite url_title="{segment_1}"}
+{css}
+{js}
+{favicon}
+{html_head_end}
+<body>
+  <div class="container content-bg">
+    {embed="global_embeds/new_header" }
+    {embed="global_embeds/main_menu" loc="home"}
+    <section class="inner-page-contents">
+      <div class="row">
+        <div class="col-lg-8">
+          <section class="category">
+            <div class="row category-caption">
+              <div class="col-lg-12">
+                <h1 class="pull-left sub-cat">DAILY SPECIALS</h1>
+              </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                  {ad_top_special_page}
+                </div>
+              </div>
+            <div class="row">
+              <div class="tabs">
+                <div class="col-lg-12">
+                  <div role="tabpanel">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs nav-justified specials-tab" role="tablist">
+                      <li role="presentation" class="{if "Monday" == "{current_day_specials}"}active{/if}"><a href="#Monday" aria-controls="monday" role="tab" data-toggle="tab" aria-expanded="true">MONDAY</a></li>
+                      <li role="presentation" class="{if "Tuesday" == "{current_day_specials}"}active{/if}"><a href="#Tuesday" aria-controls="tuesday" role="tab" data-toggle="tab" aria-expanded="false">TUESDAY</a></li>
+                      <li role="presentation" class="{if "Wednesday" == "{current_day_specials}"}active{/if}"><a href="#Wednesday" aria-controls="wednesday" role="tab" data-toggle="tab" aria-expanded="false">WEDNESDAY</a></li>
+                      <li role="presentation" class="{if "Thursday" == "{current_day_specials}"}active{/if}"><a href="#Thursday" aria-controls="thursday" role="tab" data-toggle="tab" aria-expanded="false">THURSDAY</a></li>
+                      <li role="presentation" class="{if "Friday" == "{current_day_specials}"}active{/if}"><a href="#Friday" aria-controls="friday" role="tab" data-toggle="tab" aria-expanded="false">FRIDAY</a></li>
+                      <li role="presentation" class="{if "Saturday" == "{current_day_specials}"}active{/if}"><a href="#Saturday" aria-controls="saturday" role="tab" data-toggle="tab" aria-expanded="false">SATURDAY</a></li>
+                      <li role="presentation" class="{if "Sunday" == "{current_day_specials}"}active{/if}"><a href="#Sunday" aria-controls="sunday" role="tab" data-toggle="tab" aria-expanded="false">SUNDAY</a></li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                      {embed="specials/.specials_query" day_of_the_week="Monday"}
+                      {embed="specials/.specials_query" day_of_the_week="Tuesday"}
+                      {embed="specials/.specials_query" day_of_the_week="Wednesday"}
+                      {embed="specials/.specials_query" day_of_the_week="Thursday"}
+                      {embed="specials/.specials_query" day_of_the_week="Friday"}
+                      {embed="specials/.specials_query" day_of_the_week="Saturday"}
+                      {embed="specials/.specials_query" day_of_the_week="Sunday"}
+                    </div>
+                    <div>
+                      {specials_disclaimer}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div class="col-lg-4">
+          {embed="global_embeds/tabs_sidebar"}
+        </div>
+      </div>
+    </section>
+    {embed="global_embeds/new_footer"}
+  </div>
+  {js_footer}
+  {analytics}
+  {html_close}

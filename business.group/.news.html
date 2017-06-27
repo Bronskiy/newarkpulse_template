@@ -1,0 +1,33 @@
+{exp:channel:entries channel="news" limit="3" status="open|featured|sponsored" disable="member_data|category_fields|pagination" category="{embed:replaced_id}" dynamic="off" cache="yes" refresh="48000"}
+<article class="col-lg-4 col-md-4">
+  <div class="picture">
+    <div class="category-image">
+      {if news_image}
+      <a href="{url_title_path=news/detail}"><img src="{news_image}" class="img-responsive" alt="{title}" ></a>
+      {if:else}
+      <a href="{url_title_path=news/detail}"><img src="{theme_path}images/demo_image.png" class="img-responsive" alt="{title}" ></a>
+      {/if}
+      <h2 class="overlay-category">{categories}{category_name}{/categories}</h2>
+    </div>
+  </div>
+  <div class="detail">
+    <div class="info">
+      <span class="date"><i class="fa fa-calendar-o"></i> {entry_date format="%m/%d/%Y"}</span>
+    </div>
+    <div class="caption"><a href="{url_title_path=news/detail}">{title}</a></div>
+    {if news_summary}
+    <div class="small-caption"><a href="{url_title_path=news/detail}">{news_summary}</a></div>
+    {if:else}
+    <div class="small-caption"><a href="{url_title_path=news/detail}">{exp:snippet total="100" word="true" ellipsis="..."}{news_body}{/exp:snippet}</a></div>
+    {/if}
+  </div>
+</article>
+{if count == "3" || count == total_results}
+</div>
+<div class="row pagging">
+<div class="col-lg-12 col-md-12">
+  <a href="/news{if segment_2 != ""}/category/{categories}{category_url_title}{/categories}{/if}"><button type="button" class="btn btn-primary yellow btn-show-more">Show More</button></a>
+</div>
+</div>
+{/if}
+{/exp:channel:entries}

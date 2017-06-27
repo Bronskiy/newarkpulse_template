@@ -1,0 +1,127 @@
+{html_head}
+{exp:seo_lite url_title="{segment_3}"}
+{css}
+{css_swiper}
+{js}
+{favicon}
+{html_head_end}
+<body>
+  <div class="container content-bg">
+    {embed="global_embeds/new_header" }
+    {embed="global_embeds/main_menu" loc="home"}
+    <section class="inner-page-contents">
+      <div class="row">
+        <div class="col-lg-8">
+          {exp:channel:entries channel="news" limit="1" disable="member_data|category_fields|pagination" require_entry="yes" status="open|featured|sponsored"}
+          {if no_results}{redirect="404"}{/if}
+          <section>
+            <div class="row category-caption">
+              <div class="col-lg-12">
+                {!--<h2 class="pull-left main-caption"><a href="category-fashion.html">NEWS</a></h2>--}
+                <h2 class="pull-left main-caption">{categories}<a href="/news/{category_url_title}">{category_name}</a>{/categories}</h2>
+                {news_special_category}
+                {if news_special_category:count == 1}
+                <h2 class="pull-left sub-cat"><a style="color:white;" href="/guides/{news_special_category:url_title}">{news_special_category:title}</a></h2>
+                {/if}
+                {/news_special_category}
+
+              </div>
+            </div>
+            <div class="row">
+              <article class="col-lg-12 col-md-12">
+                <div class="picture">
+                  {if news_image}
+                  <div class="category-image">
+                    <img src="{news_image}" class="img-responsive" alt="{title}" >
+                    {!--<h2 class="overlay-category">{categories}{category_name}{/categories}</h2>--}
+                  </div>
+                  {/if}
+                </div>
+                <div class="detail">
+                  <div class="info">
+                    <span class="date"><i class="fa fa-calendar-o"></i> {entry_date format="%m/%d/%Y - %h:%i %A"}</span>
+                    <span class="name"> | by {author}</span>
+                    <div class="addthis_sharing_toolbox pull-right"></div>
+                  </div>
+                  <h1 class="caption">{title}</h1>
+                </div>
+                <div class="description">
+                  {news_body}
+                </div>
+                <div class="clearfix"></div>
+                <div class="row">
+                  <div class="col-lg-12 col-md-12">
+                  <div class="swiper-container gallery-top">
+                    <div class="swiper-wrapper">
+                      {news_gallery}
+                      <div class="swiper-slide">
+                        <a class="fancybox" rel="gallery-1" href="{url}">{exp:ce_img:single src="{url}" class="img-responsive" width="800" height="400" crop="yes|{horizontal_crop},{vertical_crop}"}</a>
+                      </div>
+                      {/news_gallery}
+                    </div>
+                    <!-- Add Arrows -->
+                    <div class="swiper-button-next swiper-button-white"></div>
+                    <div class="swiper-button-prev swiper-button-white"></div>
+                  </div>
+                  <div class="swiper-container gallery-thumbs">
+                    <div class="swiper-wrapper">
+                      {news_gallery}
+                      <div class="swiper-slide" >
+                        {exp:ce_img:single src="{url}" class="img-responsive" width="188" height="94" crop="yes|{horizontal_crop},{vertical_crop}"}
+                      </div>
+                      {/news_gallery}
+                    </div>
+                  </div>
+                </div>
+                </div>
+
+
+                {news_additional_box_check}
+                {if item == "Place additional box"}
+                <div class="about-author additional-box">
+                  {if news_additional_box}
+                  <div class="row">
+                    <div class="col-lg-12">
+                      {if additional_box_title}<h3>{additional_box_title}</h3>{/if}
+                      <div class="intro">{news_additional_box}</div>
+                    </div>
+                  </div>
+                  {/if}
+                </div>
+                {/if}
+                {/news_additional_box_check}
+                {news_related_businesses status="open|featured"}
+                {if news_related_businesses:count == 1}
+                <hr>
+
+                <div>
+                  <ul class="via">
+                    <li>RELATED BUSINESSES</li>
+                    {/if}
+                    <li><a href="{news_related_businesses:url_title_path=business/detail}">{news_related_businesses:title}</a></li>
+                    {if news_related_businesses:count == news_related_businesses:total_results}
+                  </ul>
+
+                </div>
+                {/if}
+                {/news_related_businesses}
+                <div class="clearfix"></div>
+                <hr>
+                <div class="row">
+                  {ad_bottom}
+                </div>
+                {embed="global_embeds/recent_news"}
+                <hr>
+              </div>
+            </section>
+            {/exp:channel:entries}
+          </div>
+          <div class="col-lg-4">
+            {embed="global_embeds/tabs_sidebar"}
+          </div>
+        </div>
+      </section>
+      {embed="global_embeds/new_footer"}
+    </div>
+    {js_footer}
+    {html_close}

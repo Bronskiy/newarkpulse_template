@@ -1,0 +1,104 @@
+{html_head}
+{exp:seo_lite url_title="{segment_1}"}
+{css}
+<link href="{path=css/_ee_channel_form_css}" type="text/css" rel="stylesheet" media="screen">
+{js}
+{favicon}
+{html_head_end}
+<body>
+	<div class="container content-bg">
+		{embed="global_embeds/new_header" }
+		{embed="global_embeds/main_menu" loc="home"}
+		<section class="page-contents">
+			<div class="row">
+				<div class="col-lg-8">
+					<section class="category">
+						<div class="row category-caption">
+							<div class="col-lg-12">
+								<h2 class="pull-left sub-cat">Add new Business</h2>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-12">
+								<label>Please provide as much information below as possible so we can add your business to <a href="/">NewarkPulse.com</a></label>
+								{exp:channel:form channel="business_listing" return="/content/thank_you"}
+								<p>
+									<input type="text" name="title" id="title" placeholder="Enter Business Name" class="form-control">
+								</p>
+								<p>
+									<input type="text" name="business_listing_street_address" id="event_location" placeholder="Enter street address here" class="form-control">
+								</p>
+								<p>
+									<input type="text" name="business_listing_city" id="event_location" placeholder="Enter city here" class="form-control">
+								</p>
+								<p>
+									<input type="text" name="business_listing_state" id="event_location" placeholder="Enter state here" class="form-control">
+								</p>
+								<p>
+									<input type="text" name="business_listing_zip" id="event_location" placeholder="Enter zip here" class="form-control">
+								</p>
+								<p>
+									<input type="text" name="business_listing_phone" id="event_location" placeholder="Enter phone here" class="form-control">
+								</p>
+								<p>
+									<input type="text" name="business_listing_website" id="event_location" placeholder="Enter website here" class="form-control">
+								</p>
+								<p>
+									<input type="text" name="business_listing_hours" id="event_location" placeholder="Enter Business Hours here" class="form-control">
+								</p>
+								<hr>
+								<label for="business_listing_email">Contact info: Will NOT be published, for internal use only</label>
+								<p>
+									<input type="text" name="business_contact_name" id="event_location" placeholder="Enter Contact Name here" class="form-control">
+								</p>
+								<p>
+									<input type="text" name="business_listing_email" id="event_location" placeholder="Enter Contact Email here" class="form-control">
+								</p>
+								<p>
+								{field:business_advertising_packages_ch}
+							</p>
+								{!--
+								{options:business_advertising_packages_ch}
+								<p>
+									<label class="checkbox-inline">
+										<input type="checkbox" name="checkbox_fields" value="{option_value}" checked="{checked}"> {option_value}
+									</label>
+								</p>
+								{/options:business_advertising_packages_ch}
+
+								{business_advertising_packages_ch}
+								{if checkbox}
+								{options}
+								<p>
+									<label class="checkbox-inline">
+										<input type="checkbox" name="{field_name}[]" value="{option_value}"{checked}> {option_value}
+									</label>
+								</p>
+								{/options}
+								{/if}
+								{/business_advertising_packages_ch}
+								--}
+								{if captcha}
+								<label for="captcha">Please enter the word you see in the image below:</label>
+								<p>{captcha}</p>
+								<p><input type="text" name="captcha" value="{captcha_word}" maxlength="20"></p>
+								{/if}
+								<p>
+									<button type="submit" class="btn btn-primary yellow btn-show-more">
+										Submit
+									</button>
+								</p>
+								{/exp:channel:form}
+							</div>
+						</section>
+					</div>
+					<div class="col-lg-4">
+						{embed="global_embeds/tabs_sidebar"}
+					</div>
+				</div>
+			</section>
+			{embed="global_embeds/new_footer"}
+		</div>
+		{js_footer}
+		{analytics}
+		{html_close}

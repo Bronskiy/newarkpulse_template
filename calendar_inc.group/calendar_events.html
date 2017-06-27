@@ -1,0 +1,23 @@
+{exp:calendar:cal calendar_id="{embed:calendar_id}" event_limit="{embed:event_limit}" date_range_start="today" show_months="6" pad_short_weeks="n" dynamic="off"}
+{if no_results}<article class="col-lg-6 col-md-6">No events could be found</article>{/if}
+<article class="col-lg-4 col-md-4">
+	<div class="picture">
+		<div class="category-image">
+			{if event_image}
+			<a href="{path='events/event'}/{event_id}/"><img src="{event_image:small}" class="img-responsive" alt="{event_title}" ></a>
+			{if:else}
+			<a href="{path='events/event'}/{event_id}/"><img src="{theme_path}images/demo_image.png" class="img-responsive" alt="{event_title}" ></a>
+			{/if}
+			<h2 class="overlay-category">Start: {event_start_date format="%g:%i %a"}</h2>
+		</div>
+	</div>
+	<div class="detail">
+		<div class="caption"><a href="{path='events/event'}/{event_id}/">{event_title}</a></div>
+		<div class="info">
+			{event_start_date format="%F %j, %Y"}</br>
+			{if event_location}<span><i class="fa fa-map-marker"></i> {event_location}</span></br>{/if}
+		</div>
+	</div>
+</article>
+{if event_count%3 == 0}<div class="clearfix visible-lg-block visible-md-block"></div>{/if}
+{/exp:calendar:cal}

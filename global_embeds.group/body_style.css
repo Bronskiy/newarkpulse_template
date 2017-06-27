@@ -1,0 +1,12 @@
+body {
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #27242f;
+    {exp:channel:entries channel="styles" limit="1" status="open" disable="member_data|category_fields|pagination" dynamic="off" cache="yes" refresh="48000"}
+    background-image: url({styles_background});
+    {/exp:channel:entries}
+    background-repeat: repeat;
+    background-attachment: fixed;
+    background-position: center top;
+}

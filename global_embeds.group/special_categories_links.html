@@ -1,0 +1,9 @@
+{exp:channel:entries channel="special_category" orderby="title" sort="asc" status="open|featured|sponsored" disable="member_data|category_fields|pagination" dynamic="off" cache="yes" refresh="48000"}
+{special_category_options}
+
+{if item == "Add to Main menu"}
+<li><a href="{url_title_path='guides'}">{title}</a></li>
+{/if}
+
+{/special_category_options}
+{/exp:channel:entries}

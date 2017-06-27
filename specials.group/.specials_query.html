@@ -1,0 +1,57 @@
+<div role="tabpanel" class="tab-pane{if "{embed:day_of_the_week}" == "{current_day_specials}"} active{/if}" id="{embed:day_of_the_week}">
+  <div class="description">
+    <h2>{embed:day_of_the_week} Specials</h2>
+    <hr>
+    {exp:query sql="SELECT
+    nap_channel_grid_field_32.entry_id as Entries,
+    nap_channel_grid_field_32.col_id_2,
+    nap_channel_grid_field_32.col_id_3,
+    nap_channel_grid_field_32.col_id_4,
+    nap_channel_titles.title,
+    nap_channel_titles.url_title,
+    nap_channel_titles.status,
+    nap_channel_titles.entry_id
+    FROM
+    nap_channel_grid_field_32,
+    nap_channel_titles
+    WHERE
+    nap_channel_grid_field_32.entry_id = nap_channel_titles.entry_id
+    and
+    nap_channel_titles.status ='Featured'
+    and
+    nap_channel_grid_field_32.col_id_1 = '{embed:day_of_the_week}' ORDER BY nap_channel_titles.title" cache="yes" refresh="48000"}
+
+    <a href="/business/detail/{url_title}"><h3>{title}</h3></a>
+    {if col_id_2}<p><i class="fa fa-cutlery"></i> {col_id_2}</p>{/if}
+    {if col_id_3}<p><i class="fa fa-glass"></i> {col_id_3}</p>{/if}
+    {if col_id_4}<p><i class="fa fa-star-o"></i> {col_id_4}</p>{/if}
+    <hr>
+    {/exp:query}
+    {exp:query sql="SELECT
+    nap_channel_grid_field_32.entry_id as Entries,
+    nap_channel_grid_field_32.col_id_2,
+    nap_channel_grid_field_32.col_id_3,
+    nap_channel_grid_field_32.col_id_4,
+    nap_channel_titles.title,
+    nap_channel_titles.url_title,
+    nap_channel_titles.status,
+    nap_channel_titles.entry_id
+    FROM
+    nap_channel_grid_field_32,
+    nap_channel_titles
+    WHERE
+    nap_channel_grid_field_32.entry_id = nap_channel_titles.entry_id
+    and
+    nap_channel_titles.status !='Featured'
+    and
+    nap_channel_grid_field_32.col_id_1 = '{embed:day_of_the_week}' ORDER BY nap_channel_titles.title" cache="yes" refresh="48000"}
+    {if no_results} Sorry, we can't find anything for this day. {/if}
+
+    <a href="/business/detail/{url_title}"><h3>{title}</h3></a>
+    {if col_id_2}<p><i class="fa fa-cutlery"></i> {col_id_2}</p>{/if}
+    {if col_id_3}<p><i class="fa fa-glass"></i> {col_id_3}</p>{/if}
+    {if col_id_4}<p><i class="fa fa-star-o"></i> {col_id_4}</p>{/if}
+    <hr>
+    {/exp:query}
+  </div>
+</div>

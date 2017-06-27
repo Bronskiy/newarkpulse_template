@@ -1,0 +1,223 @@
+{html_head}
+{exp:seo_lite url_title="{segment_3}"}
+{css}
+{js}
+{js_google_map}
+{favicon}
+{html_head_end}
+<body>
+	<div class="container content-bg">
+		{embed="global_embeds/new_header" }
+		{embed="global_embeds/main_menu"}
+		<section class="inner-page-contents">
+			<div class="row">
+				<div class="col-lg-8">
+					{exp:channel:entries channel="business_listing" limit="1" disable="member_data|category_fields" require_entry="yes" status="open|featured"}
+					{if no_results}{redirect="404"}{/if}
+					{if business_listing_street_address}
+					<div id="panel" class="hidden" >
+					<script> window.onload = codeAddress; </script>
+					<input id="address" type="textbox" value="{business_listing_street_address}, {business_listing_city}, {business_listing_state} {business_listing_zip}">
+				</div>
+				{/if}
+				<section>
+					<div class="row category-caption business-page">
+						<div class="col-lg-12">
+							{categories limit="1"}<h2 class="pull-left main-caption"><a href="/news/{category_url_title}">{category_name}</a></h2>{/categories}
+						</div>
+					</div>
+						{business_listing_images}
+						{if business_listing_images:count == 1}<div class="slider">{/if}
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="pic-with-overlay">
+									<img src="{business_listing_images:image:slide}" class="img-responsive" alt="{title}" >
+									<div class="bg">&nbsp;</div>
+									{!--<h1>{title}</h1>--}
+								</div>
+							</div>
+						</div>
+						{if business_listing_images:count == business_listing_images:total_rows}</div>{/if}
+						{/business_listing_images}
+					<div class="row">
+						<article class="col-lg-12 col-md-12">
+							<div class="detail">
+							<div class="addthis_sharing_toolbox pull-right"></div>
+								<h1 class="caption">{title}</h1>
+								<div class="info">
+								</div>
+							</div>
+							{if business_listing_logo}
+							<div class="author">
+								<div class="pic">
+									<img src="{business_listing_logo}" alt="{title}">
+								</div>
+							</div>
+							{/if}
+							<div class="description">
+								{if business_listing_more_info}
+								{business_listing_more_info}
+								<hr>
+								{/if}
+								<p><i class="fa fa-map-marker"></i> <span id="address">{business_listing_street_address}, {business_listing_city}, {business_listing_state} {business_listing_zip}</span></p>
+								{if business_listing_phone}<p><i class="fa fa-phone"></i> {business_listing_phone}</p>{/if}
+								{if business_listing_website}<p><i class="fa fa-globe"></i> <a href="{business_listing_website}" target="_blank">Website</a></p>{/if}
+								{if business_listing_hours}<p><i class="fa fa-clock-o"></i> {business_listing_hours}</p>{/if}
+								{if business_listing_parking}<p><i class="fa fa-car"></i> {business_listing_parking}</p>{/if}
+								{if business_listing_menu_upload_pdf}<p><i class="fa fa-book"></i> <a href="{business_listing_menu_upload_pdf}" target="_blank">Menu</a></p>{/if}
+								{if business_listing_features}<p><i class="fa fa-check"></i><span> Features:</span> {business_listing_features}</p>{/if}
+								{if business_listing_online_reservat}<p><i class="fa fa-pencil-square-o"></i> <a href="{business_listing_online_reservat}" target="_blank">Online Reservation</a></p>{/if}
+
+
+							</div>
+							<div class="clearfix"></div>
+							<hr>
+							<div class="clearfix"></div>
+							{if business_listing_specials}
+							<table class="table special-striped">
+								<thead>
+									<tr>
+										<th colspan="2">DAILY SPECIALS:</th>
+									</tr>
+								</thead>
+								<tbody>
+									{business_listing_specials}
+									<tr class="day_{business_listing_specials:day} day_{business_listing_specials:count}">
+										<td rowspan="3">{business_listing_specials:day}</td>
+										{if business_listing_specials:food}
+										<td><i class="fa fa-cutlery"></i> {business_listing_specials:food}</td>
+										{if:else}
+										<td style="display: none;"></td>
+										{/if}
+									</tr>
+									<tr class="day_{business_listing_specials:day} day_{business_listing_specials:count}">
+										{if business_listing_specials:drink}
+										<td><i class="fa fa-glass"></i> {business_listing_specials:drink}</td>
+										{if:else}
+										<td style="display: none;"></td>
+										{/if}
+									</tr>
+									<tr class="day_{business_listing_specials:day} day_{business_listing_specials:count}">
+									{if business_listing_specials:others}
+										<td><i class="fa fa-star-o"></i> {business_listing_specials:others}</td>
+										{if:else}
+										<td style="display: none;"></td>
+									{/if}
+								</tr>
+									{/business_listing_specials}
+								</tbody>
+							</table>
+							<hr>
+							{/if}
+							<div>
+								<ul class="via">
+									<li>Categories</li>
+									{categories}<li><a href="{path='business'}">{category_name}</a></li>{/categories}
+								</ul>
+								<div class="clearfix"></div>
+								{if business_listing_area}
+								<ul class="via">
+									<li>Area</li>
+									{business_listing_area}<li><a href="">{item}</a></li>{/business_listing_area}
+								</ul>
+								<div class="clearfix"></div>
+								{/if}
+							</div>
+							<hr>
+								<div class="info">
+									<span class="date"><i class="fa fa-calendar-o"></i> Updated {edit_date format="%F %d, %Y"}</span>
+								</div>
+							<hr>
+							<div id="map-canvas"></div>
+
+							{parents field="news_related_businesses" orderby="date" sort="desc" status="open|featured" limit="6"}
+							{if parents:count == '1'}
+							<hr>
+							<div class="related-articles">
+								<div class="row category-caption">
+									<div class="col-lg-12">
+										<h2 class="pull-left">RELATED NEWS</h2>
+									</div>
+								</div>
+								<div class="row">
+									{/if}
+									<article class="col-lg-4 col-md-4">
+										<div class="picture">
+											<div class="category-image">
+												{if parents:news_image}
+												<a href="{parents:url_title_path=news/detail}"><img src="{parents:news_image:small}" class="img-responsive" alt="{parents:title}" ></a>
+												{if:else}
+												<a href="{parents:url_title_path=news/detail}"><img src="{theme_path}images/demo_image.png" class="img-responsive" alt="{parents:title}" ></a>
+												{/if}
+												<h2 class="overlay-category">{parents:categories}{category_name}{/parents:categories}</h2>
+											</div>
+										</div>
+										<div class="detail">
+											<div class="info">
+												<span class="date"><i class="fa fa-calendar-o"></i> {parents:entry_date format="%m/%d/%Y"}</span>
+											</div>
+											<div class="caption"><a href="{parents:url_title_path=news/detail}">{parents:title}</a></div>
+											{if parents:news_summary}
+											<div class="small-caption"><a href="{parents:url_title_path=news/detail}">{parents:news_summary}</a></div>
+											{if:else}
+											<div class="small-caption"><a href="{parents:url_title_path=news/detail}">{exp:snippet total="100" word="true" ellipsis="..."}{parents:news_body}{/exp:snippet}</a></div>
+											{/if}
+										</div>
+									</article>
+									{if {parents:count}%3 == 0 }<div class="clearfix visible-lg-block visible-md-block"></div>{/if}
+									{if {parents:count} == {parents:total_results}}
+								</div>
+							</div>
+							{/if}
+							{/parents}
+							{parents field="event_related_business" status="open|featured"}
+							{if parents:count == '1'}
+							<hr>
+							<div class="related-articles">
+								<div class="row category-caption">
+									<div class="col-lg-12">
+										<h2 class="pull-left">RELATED EVENTS</h2>
+									</div>
+								</div>
+								<div class="row">
+									{/if}
+									<article class="col-lg-4 col-md-4">
+										<div class="picture">
+											{if parents:event_image}
+											<div class="category-image">
+												<a href="{path='events/event'}/{parents:event_id}/{if parents:event_recurs}{parents:event_start_date format="%Y/%m/%d"}/{/if}"><img src="{parents:event_image:small}" class="img-responsive" alt="{parents:title}" ></a>
+											</div>
+											{if:else}
+											<div class="category-image">
+												<a href="{path='events/event'}/{parents:event_id}/{if parents:event_recurs}{parents:event_start_date format="%Y/%m/%d"}/{/if}"><img src="{theme_path}images/demo_image.png" class="img-responsive" alt="{parents:title}" ></a>
+											</div>
+											{/if}
+										</div>
+										<div class="detail">
+											<div class="caption"><a href="{path='events/event'}/{parents:event_id}/{if parents:event_recurs}{parents:event_start_date format="%Y/%m/%d"}/{/if}">{parents:title}</a></div>
+											{!--<div class="info">
+												{if parents:event_location}<span><i class="fa fa-map-marker"></i> {parents:event_location}</span></br>{/if}
+											</div>--}
+										</div>
+									</article>
+										{if {parents:count}%3 == 0 }<div class="clearfix visible-lg-block visible-md-block"></div>{/if}
+									{if {parents:count} == {parents:total_results}}
+								</div>
+							</div>
+							{/if}
+							{/parents}
+						</article>
+					</div>
+				</section>
+				{/exp:channel:entries}
+			</div>
+			<div class="col-lg-4">
+				{embed="global_embeds/tabs_sidebar"}
+			</div>
+		</div>
+	</section>
+	{embed="global_embeds/new_footer"}
+</div>
+{js_footer}
+{analytics}
+{html_close}

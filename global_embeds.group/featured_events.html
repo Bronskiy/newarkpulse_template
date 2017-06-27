@@ -1,0 +1,41 @@
+{exp:calendar:events
+	orderby="event_start_day"
+	sort="asc"
+	date_range_start="today"
+	show_months="3"
+	dynamic="off"
+	status="featured"
+  cache="yes"
+	refresh="48000"
+}
+{if count == "1"}
+<section class="editor-picks featured-events">
+	<div class="row category-caption">
+		<div class="col-lg-12">
+			<h2 class="pull-left">FEATURED EVENTS</h2>
+		</div>
+	</div>
+	<div class="row featured-events-carousel">
+		{/if}
+		<article class="">
+			<div class="picture">
+				<div class="category-image">
+					{if event_image}
+					<a href="{path='events/event'}/{event_id}/{event_url_title}/{if event_recurs}{event_start_date format="%Y/%m/%d"}/{/if}"><img src="{event_image:small}" class="img-responsive" alt="{business_listing_images:alt_attribute}" ></a>
+				{if:else}
+					<a href="{path='events/event'}/{event_id}/{event_url_title}/{if event_recurs}{event_start_date format="%Y/%m/%d"}/{/if}"><img src="{theme_path}images/demo_image.png" class="img-responsive" alt="{title}" ></a>
+					{/if}
+					{!-- <h2 class="overlay-category">START: {event_start_date format="%g:%i %a"}</h2>--}
+				</div>
+			</div>
+			<div class="detail">
+				<div class="caption">
+					<a href="{path='events/event'}/{event_id}/{event_url_title}/{if event_recurs}{event_start_date format="%Y/%m/%d"}/{/if}">{title}</a>
+				</div>
+			</div>
+		</article>
+		{if count == total_results}
+	</div>
+</section>
+{/if}
+{/exp:calendar:events}

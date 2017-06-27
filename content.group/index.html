@@ -1,0 +1,65 @@
+{html_head}
+{exp:seo_lite url_title="{segment_2}"}
+{css}
+{js}
+{favicon}
+{html_head_end}
+<body>
+  <div class="container content-bg">
+    {embed="global_embeds/new_header" }
+    {embed="global_embeds/main_menu" loc="home"}
+    {exp:channel:entries channel="menu|pages" status="open|featured|sponsored" limit="1" sort="asc"}
+    {if no_results}{redirect="404"}{/if}
+    <section class="page-contents">
+      <div class="row">
+        <div class="col-lg-8">
+          <section class="category">
+            <div class="row category-caption">
+              <div class="col-lg-12">
+                <h2 class="pull-left main-caption"><a href="/">HOME</a></h2>
+                <h1 class="pull-left sub-cat">{title}</h1>
+              </div>
+            </div>
+            <div class="row">
+              <article class="col-lg-12 col-md-12">
+                {if page_image}
+                <div class="picture">
+                  <div class="category-image">
+                    <img src="{news_image:small}" class="img-responsive" alt="{title}" >
+                  </div>
+                </div>
+                {/if}
+                <div class="detail">
+                  {page_body}
+                </div>
+              </article>
+              {if count%3 == 0}<div class="clearfix visible-lg-block visible-md-block"></div>{/if}
+              {if count % 12 == 0 || count == total_results}</div>{/if}
+              {paginate}
+              {pagination_links}
+              <div class="row pagging">
+                <div class="col-lg-12 col-md-12">
+                  <ul class="pagination pagination-lg">
+                    {previous_page}<li><a href="{pagination_url}" aria-label="Prev"><span aria-hidden="true">&laquo;</span></a></li>{/previous_page}
+                    {page}
+                    <li {if current_page}class="active"{/if}><a href="{pagination_url}">{pagination_page_number}</a></li>
+                    {/page}
+                    {next_page}<li><a href="{pagination_url}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>{/next_page}
+                  </ul>
+                </div>
+              </div>
+              {/pagination_links}
+              {/paginate}
+              {/exp:channel:entries}
+            </section>
+          </div>
+          <div class="col-lg-4">
+            {embed="global_embeds/tabs_sidebar"}
+          </div>
+        </div>
+      </section>
+      {embed="global_embeds/new_footer"}
+    </div>
+    {js_footer}
+		{analytics}
+    {html_close}

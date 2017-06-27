@@ -1,0 +1,52 @@
+{html_head}
+{exp:seo_lite}
+{css}
+{js}
+{favicon}
+{html_head_end}
+<body>
+	<div class="container content-bg">
+		{embed="global_embeds/new_header" }
+		{embed="global_embeds/main_menu" loc="home"}
+		<section class="inner-page-contents">
+			<div class="row">
+				<div class="col-lg-8">
+					<section class="category">
+						<div class="row category-caption">
+							<div class="col-lg-12">
+								<h1 class="pull-left">CLASSIFIEDS</h1>
+							</div>
+						</div>
+						<div class="row">
+							{exp:channel:entries channel="classifieds" disable="member_data|category_fields|pagination" dynamic="off"}
+							<article class="col-lg-4 col-md-4">
+								{if classifieds_image}
+								<div class="picture">
+									<div class="category-image">
+										<img src="{classifieds_image:small}" class="img-responsive" alt="{title}" >
+									</div>
+								</div>
+								{/if}
+								<div class="detail">
+									<div class="small-caption">{title}</div>
+									<div class="info">
+										<p>{classifieds_body}</p>
+										<span class="date"><i class="fa fa-calendar-o"></i> {entry_date format="%m/%d/%Y"}</span>
+									</div>
+								</div>
+							</article>
+							{/exp:channel:entries}
+						</div>
+					</section>
+				</div>
+				<div class="col-lg-4">
+					{embed="global_embeds/tabs_sidebar"}
+				</div>
+			</div>
+		</section>
+		{embed="global_embeds/new_footer"}
+		<a href="#" class="scrollup">Scroll</a>
+	</div>
+	{js_footer}
+	{analytics}
+	{html_close}

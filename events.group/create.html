@@ -1,0 +1,85 @@
+{html_head}
+{exp:seo_lite url_title="{segment_2}"}
+{exp:calendar:datepicker_css}
+{css}
+{js}
+{favicon}
+{html_head_end}
+<body>
+	<div class="container content-bg">
+		{embed="global_embeds/new_header" }
+		{embed="global_embeds/main_menu" loc="home"}
+		<section class="page-contents">
+			<div class="row">
+				<div class="col-lg-8">
+					<section class="category">
+						<div class="row category-caption">
+							<div class="col-lg-12">
+								{exp:gwcode_categories cat_id="{parent_id}" style="linear" show_trail="yes"}
+								<h2 class="pull-left main-caption"><a href="{output_path}">{cat_name}</a></h2>
+								{/exp:gwcode_categories}
+								<h2 class="pull-left sub-cat">Add an Event</h2>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-12">
+
+								{exp:channel:form
+									channel="calendar_events"
+									return="events/event/ENTRY_ID/created"
+								}
+								<p>
+									<input type="text" name="title" id="title" placeholder="Event Name" class="form-control">
+								</p>
+									<p>
+									{exp:calendar:date_widget}
+								</p>
+
+						
+
+									<p>
+										<label for="event_location">Location</label>
+										<input type="text" name="event_location" id="event_location" placeholder="Enter event location here" class="form-control">
+									</p>
+									<p>
+										<label for="event_summary">Description</label>
+										<textarea name="event_summary" placeholder="Enter event description here" class="form-control"></textarea>
+									</p>
+									<hr>
+									<label for="business_listing_email">Contact info: Will NOT be published, for internal use only</label>
+									<p>
+										<input type="text" name="event_contact_name" id="event_location" placeholder="Enter Contact Name here" class="form-control">
+									</p>
+									<p>
+										<input type="text" name="event_contact_email" id="event_location" placeholder="Enter Contact Email here" class="form-control">
+									</p>
+									{if captcha}
+									<label for="captcha">Please enter the word you see in the image below:</label>
+									<p>{captcha}</p>
+									<p><input type="text" name="captcha" value="{captcha_word}" maxlength="20"></p>
+									{/if}
+									<p>
+										<button type="submit" class="btn btn-primary yellow btn-show-more">
+											Submit
+										</button>
+									</p>
+									<label>Please allow 24-48 hours for events to go live on the site.</label>
+									{/exp:channel:form}
+								</div>
+							</section>
+						</div>
+						<div class="col-lg-4">
+							{embed="global_embeds/tabs_sidebar"}
+						</div>
+					</div>
+				</section>
+				{embed="global_embeds/new_footer"}
+			</div>
+			{js_footer}
+			<script type="text/javascript"
+			src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
+			<script type="text/javascript"
+			src="/themes/third_party/calendar/js/jquery-ui.custom.min.js"></script>
+			{exp:calendar:datepicker_js}
+			{analytics}
+			{html_close}

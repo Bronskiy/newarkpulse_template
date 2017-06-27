@@ -1,0 +1,44 @@
+<section class="footer">
+	<div class="row2 container-fluid">
+		<div class="row">
+			<div class="col-lg-4">
+				<div class="about">
+					<h3>About</h3>
+					<div class="footer-logo"><img src="/assets/images/footer-logo.png" alt="" ></div>
+					<ul class="contactus">
+						<li><i class="fa fa-envelope-o"></i> <a href="/contact-us">Contact Us</a></li>
+						<li><i class="fa fa-envelope-o"></i> <a href="mailto:{site_email}">{site_email}</a></li>
+					</ul>
+					<div class="introduction">{site_about}</div>
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<div class="tweets">
+					<h3>Live Tweets</h3>
+					<ul>
+						{exp:twitter:user screen_name="newarkpulse" limit="4"}
+						<li>{text}<br>
+							<span>{twitter_relative_date} | </span><span>By <a href="{permalink}" target="_blank">{name}</a></span>
+						</li>
+						{/exp:twitter:user}
+					</ul>
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<h3>Info</h3>
+				{exp:navee:nav nav_title="menu_info" class="contactus"}
+				<h3>Follow Us</h3>
+				<ul class="social-icons">
+					{footer_social_links}
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="row3">
+		<div class="row">
+			<div class="col-lg-12 copyright">© {current_time format="%Y"} - Xplore Communications</div>
+		</div>
+	</div>
+</section>
+<a href="#" class="scrollup">Scroll</a>
+{aweber_popup}

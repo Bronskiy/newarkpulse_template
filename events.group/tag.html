@@ -1,0 +1,54 @@
+{html_head}
+{exp:seo_lite url_title="{segment_3}"}
+{css}
+{js}
+{favicon}
+{html_head_end}
+<body>
+  <div class="container content-bg">
+    {embed="global_embeds/new_header" }
+    {embed="global_embeds/main_menu" }
+    <section class="page-contents">
+      <div class="row">
+        <div class="col-lg-8">
+          <section class="category">
+            <div class="row category-caption">
+              <div class="col-lg-12">
+                <h2 class="pull-left sub-cat">{exp:tag:tag_name tag="{segment_3}" case="title"}</h2>
+              </div>
+            </div>
+            <div class="row">
+              {exp:tag:entries tag="{segment_3}" orderby="entry_id" cache="yes" refresh="48000" status="open|featured"}
+              {if tag_no_results}<article class="col-lg-6 col-md-6">No events</article></div>{/if}
+              <article class="col-lg-4 col-md-4">
+								<div class="picture">
+									<div class="category-image">
+										{if event_image}
+										<a href="{path='events/event'}/{entry_id}/{url_title}"><img src="{event_image}" class="img-responsive" alt="{title}" ></a>
+										{if:else}
+										<a href="{path='events/event'}/{entry_id}/{url_title}"><img src="/assets/images/demo_image.png" class="img-responsive" alt="{title}" ></a>
+										{/if}
+                    {exp:calendar:events event_id="{entry_id}"}
+                    <h2 class="overlay-category">START: {event_start_date format="%F %j, %Y"}</h2>
+                    {/exp:calendar:events}
+									</div>
+								</div>
+								<div class="detail">
+									<div class="caption"><a href="{path='events/event'}/{entry_id}/{url_title}">{title}</a></div>
+								</div>
+							</article>
+              {if count%3 == 0}<div class="clearfix visible-lg-block visible-md-block"></div>{/if}
+              {/exp:tag:entries}
+            </div>
+          </section>
+        </div>
+        <div class="col-lg-4">
+          {embed="global_embeds/tabs_sidebar"}
+        </div>
+      </div>
+    </section>
+    {embed="global_embeds/new_footer"}
+  </div>
+  {js_footer}
+  {analytics}
+  {html_close}

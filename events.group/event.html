@@ -1,0 +1,234 @@
+{html_head}
+{exp:seo_lite entry_id="{segment_3}"}
+{css}
+{js}
+{favicon}
+{html_head_end}
+<body>
+	<div class="container content-bg">
+		{embed="global_embeds/new_header" }
+		{embed="global_embeds/main_menu" loc="type"}
+		<section class="page-contents">
+			<div class="row">
+				<div class="col-lg-8">
+					<section>
+						{!--<div class="row category-caption">
+							<div class="col-lg-12">
+								{exp:calendar:events
+									require_entry="yes"
+									event_id="{segment_3}"
+									date_range_start="99 months ago"
+									show_months="999"
+									dynamic="off"
+									status="not closed|Moderated"
+									cache="yes"
+									refresh="48000"
+								}
+								{categories}<h2 class="pull-left sub-cat">{category_name}</h2>{/categories}
+								{/exp:calendar:events}
+							</div>
+						</div>--}
+						{embed="global_embeds/featured_events" }
+						<div class="row">
+							<article class="col-lg-12 col-md-12">
+								{if segment_4 == "created" OR segment_4 == "updated"}
+								<div class="alert alert-success" role="alert">
+								{if segment_4 == "created"}
+										{upgrade_your_event}
+
+										{/if}
+										{if segment_4 == "updated"}
+										<p class="lead">
+										Event has been successfully updated!
+										</p>
+										{/if}
+
+								</div>
+								{/if}
+								{exp:calendar:events
+									require_entry="yes"
+									event_id="{segment_3}"
+									date_range_start="99 months ago"
+									show_months="999"
+									dynamic="off"
+									status="not closed|Moderated"
+									cache="yes"
+									refresh="48000"
+								}
+								{if no_results}
+								{if segment_4 == 'created'}
+								{if:else}
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="alert alert-warning">
+											<i class="icon-warning-sign"></i>Sorry, no event was found.
+										</div>
+									</div>
+								</div>
+								{/if}
+								{/if}
+								{if event_image}
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="pic-with-overlay">
+											<img src="{event_image}" class="img-responsive" alt="{title}" >
+											<div class="bg">&nbsp;</div>
+										</div>
+									</div>
+								</div>
+								{/if}
+								{!--
+								<div class="category-caption">
+									<h1 class="caption pull-left">{title}</h1>
+									<div class="pull-right"><div class="addthis_sharing_toolbox"></div></div>
+								</div>
+								--}
+								<div class="detail">
+									<div class="pull-right"><div class="addthis_sharing_toolbox"></div></div>
+									<h1 class="caption">{title}</h1>
+							</div>
+
+								<div class="clearfix"></div>
+								<div class="description">
+									<hr>
+									<p><i class="fa fa-calendar"></i> <b>Date(s):</b>
+										{event_first_date format="%F %j, %Y"}
+										{if event_all_day}
+										(all day)
+										{if:else}
+										at {event_first_date format="%g:%i%a"}
+										{if event_never_ends}
+										(never ends)
+										{if:else}
+										{if "{event_first_date format='%Y%m%d%g%i%a'}" != "{event_last_date format='%Y%m%d%g%i%a'}"}
+										<b class="text-info">-</b>
+										{if "{event_first_date format='%Y%m%d'}" != "{event_last_date format='%Y%m%d'}"}
+										{event_last_date format="%F %j, %Y at %g:%i%a"}
+										{if:else}
+										{event_last_date format="%g:%i%a"}
+										{/if}
+										{/if}
+										{/if}
+										{/if}
+									</p>
+									{embed="events/.location_sql_query" parent="{entry_id}" loc="{event_location}" segment="{segment_2}"}
+									{event_related_business status="open|featured|sponsored"}
+									{if event_related_business:count == '1'}
+									<p><i class="fa fa-map-marker"></i> <b>Location:</b> <a href="{event_related_business:url_title_path=business/detail}">{event_related_business:title}</a></p>
+									{/if}
+									{/event_related_business}
+									{if event_cost}<p><i class="fa fa-money"></i> <b>Cost:</b> {event_cost}</p>{/if}
+									{if event_more_info}<span><a href="{event_more_info}" target="_blank">More info</a></span>{/if}
+									{if event_buy_tickets}
+									<hr>
+									<div class="category-caption">
+										<span class="pull-left"><a href="{event_buy_tickets}" target="_blank"><i class="fa fa-ticket"></i> Buy Tickets</a></span>
+										<div class="clearfix"></div>
+									</div>
+									{/if}
+									<hr>
+									<p>{event_summary}</p>
+
+									{!--	{if segment_4 AND segment_5 AND segment_6}
+									<dt>Occurrence Date</dt>
+									<dd>
+										{if event_recurs}
+										{exp:calendar:date base_date="{segment_4}-{segment_5}-{segment_6}" output_date="today"}
+										{date format="%l, %F %j, %Y"} {if event_all_day}(all day){if:else}at {event_start_date format="%g:%i%a"}{/if}
+										{/exp:calendar:date}
+										{if:else}
+										{event_start_date format="%l, %F %j, %Y"} {if event_all_day}(all day){if:else}at {event_start_date format="%g:%i%a"}{/if}
+										{/if}
+									</dd>
+									{/if}
+									--}
+
+								</div>
+								{embed="global_embeds/event_occurrences_tab"}
+								<div class="clearfix"></div>
+								<hr>
+								<div>
+									<ul class="via">
+										<li>Categories</li>
+										{exp:gwcode_categories entry_id="{event_id}" style="linear"}
+										<li><a href="/events/category/{cat_url_title}">{cat_name}</a></li>
+										{/exp:gwcode_categories}
+									</ul>
+								</div>
+
+								{exp:tag:tags entry_id="{entry_id}" orderby="tag_name" sort="asc" limit="10"}
+								{if tag_count == 1}
+								<div class="clearfix"></div>
+								<div>
+									<ul class="via">
+										<li>Tags</li>
+										{/if}
+										<li><a href="/events/tag/{websafe_tag}">{tag}</a></li>
+										{if tag_count == tag_total_results}
+									</ul>
+								</div>
+								{/if}
+
+								{/exp:tag:tags}
+								<div class="clearfix"></div>
+								<hr>
+								<div class="category-caption">
+									<span class="pull-left"><a href="{path='events/export/event'}/{segment_3}/"><i class="fa fa-plus"></i> Export Event</a></span>
+									<div class="clearfix"></div>
+								</div>
+								{event_related_news status="open|featured|sponsored"}
+								{if event_related_news:count == '1'}
+								<hr>
+								<div class="related-articles">
+									<div class="row category-caption">
+										<div class="col-lg-12">
+											<h2 class="pull-left">RELATED NEWS</h2>
+										</div>
+									</div>
+									<div class="row">
+										{/if}
+										<article class="col-lg-4 col-md-4">
+											<div class="picture">
+												<div class="category-image">
+													{if event_related_news:news_image}
+													<a href="{event_related_news:url_title_path=business/detail}"><img src="{event_related_news:news_image:small}" class="img-responsive" alt="{parents:title}" ></a>
+													{if:else}
+													<a href="{event_related_news:url_title_path=business/detail}"><img src="/assets/images/demo_image.png" class="img-responsive" alt="{parents:title}" ></a>
+													{/if}
+													<h2 class="overlay-category">{event_related_news:categories}{category_name}{/event_related_news:categories}</h2>
+												</div>
+											</div>
+											<div class="detail">
+												<div class="info">
+													<span class="date"><i class="fa fa-calendar-o"></i> {event_related_news:entry_date format="%m/%d/%Y"}</span>
+												</div>
+												<div class="caption"><a href="{event_related_news:url_title_path=business/detail}">{event_related_news:title}</a></div>
+												{if event_related_news:news_summary}
+												<div class="small-caption"><a href="{event_related_news:url_title_path=business/detail}">{event_related_news:news_summary}</a></div>
+												{if:else}
+												<div class="small-caption"><a href="{event_related_news:url_title_path=business/detail}">{exp:snippet total="100" word="true" ellipsis="..."}{parents:news_body}{/exp:snippet}</a></div>
+												{/if}
+											</div>
+										</article>
+										{if event_related_news:count == event_related_news:total_results}
+									</div>
+								</div>
+								{/if}
+								{/event_related_news}
+
+								{/exp:calendar:events}
+							</article>
+						</div>
+					</section>
+				</div>
+				<div class="col-lg-4">
+					{embed="global_embeds/tabs_sidebar"}
+				</div>
+			</div>
+		</section>
+		{embed="global_embeds/new_footer"}
+		<a href="#" class="scrollup">Scroll</a>
+	</div>
+	{js_footer}
+	{analytics}
+	{html_close}

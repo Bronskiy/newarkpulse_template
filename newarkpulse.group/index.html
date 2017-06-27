@@ -1,0 +1,155 @@
+{if segment_2 != ''}
+{redirect="404"}
+{/if}
+{html_head}
+{exp:seo_lite}
+{css}
+<link rel="stylesheet" type="text/css" media="all" href="{stylesheet='global_embeds/.calendar_css' }" />
+{js}
+{favicon}
+{html_head_end}
+<body>
+	<div class="container content-bg">
+		<h1 class="semantic">Newarkpulse</h1>
+		{embed="global_embeds/new_header" }
+		{embed="global_embeds/main_menu" loc="home"}
+		<section class="page-contents">
+			<div class="row">
+
+				<div class="ad-space col-lg-12">
+					{ad_top_leaderboard}
+				</div>
+				<div class="col-lg-8">
+					{exp:channel:entries channel="news" limit="3" status="featured" disable="member_data|category_fields|pagination" dynamic="off" cache="yes" refresh="48000"}
+					{if count == '1'}
+					<section>
+						<div class="row category-caption">
+							<div class="col-lg-12">
+								<h2 class="pull-left">FEATURED</h2>
+							</div>
+						</div>
+						<div class="row">
+							{/if}
+							<article class="col-lg-4 col-md-4">
+								<div class="picture">
+									<div class="category-image">
+										{if news_image}
+										<a href="{url_title_path=news/detail}"><img src="{news_image:small}" class="img-responsive" alt="{title}" ></a>
+										{if:else}
+										<a href="{url_title_path=news/detail}"><img src="/assets/images/demo_image.png" class="img-responsive" alt="{title}" ></a>
+										{/if}
+									</div>
+								</div>
+								<div class="detail">
+									<div class="info">
+										<span class="date"><i class="fa fa-calendar-o"></i> {entry_date format="%m/%d/%Y"}</span>
+									</div>
+									<div class="caption"><a href="{url_title_path=news/detail}">{title}</a></div>
+									{if news_summary}
+									<div class="small-caption"><a href="{url_title_path=news/detail}">{news_summary}</a></div>
+									{if:else}
+									<div class="small-caption"><a href="{url_title_path=news/detail}">{exp:snippet total="100" word="true" ellipsis="..."}{news_body}{/exp:snippet}</a></div>
+									{/if}
+								</div>
+							</article>
+							{if count%3 == 0}<div class="clearfix visible-lg-block visible-md-block"></div>{/if}
+							{if count == total_results}
+						</div>
+					</section>
+					<hr>
+					{/if}
+					{/exp:channel:entries}
+					<section>
+						<div class="row category-caption">
+							<div class="col-lg-12">
+								<h2 class="pull-left">LATEST NEWS</h2>
+							</div>
+						</div>
+						<div class="row">
+							{exp:channel:entries channel="news" limit="6" status="open|featured" disable="member_data|category_fields|pagination" dynamic="no" cache="yes" refresh="48000"}
+							<article class="col-md-4">
+								<div class="picture">
+								<a href="{url_title_path=news/detail}">
+									<div class="category-image">
+										{if news_image}
+										<img src="{news_image}" class="img-responsive" alt="{title}" >
+										{if:else}
+										<img src="/assets/images/demo_image.png" class="img-responsive" alt="{title}" >
+										{/if}
+									</div>
+									</a>
+								</div>
+								<div class="detail">
+									<div class="info">
+										<span class="date"><i class="fa fa-calendar-o"></i> {entry_date format="%m/%d/%Y"}</span>
+									</div>
+									<div class="caption"><a href="{url_title_path=news/detail}">{title}</a></div>
+									{if news_summary}
+									<div class="small-caption"><a href="{url_title_path=news/detail}">{news_summary}</a></div>
+									{if:else}
+									<div class="small-caption"><a href="{url_title_path=news/detail}">{exp:snippet total="100" word="true" ellipsis="..."}{news_body}{/exp:snippet}</a></div>
+									{/if}
+								</div>
+							</article>
+							{if count%3 == 0}<div class="clearfix visible-lg-block visible-md-block"></div>{/if}
+							{if count == 6}
+								{ad_middle_homepage}
+							{/if}
+							{/exp:channel:entries}
+						</div>
+					</section>
+					<hr>
+					{embed="global_embeds/.feature_events_and_calendar" }
+					<hr>
+					{embed="business/.featured" }
+					{!--
+					{exp:calendar:events event_limit="12" date_range_start="today" status="featured" show_months="3" pad_short_weeks="n" dynamic="off"}
+					{if no_results}<article class="col-lg-6 col-md-6">No events could be found</article>{/if}
+					{if count == "1"}
+
+
+					<section class="editor-picks">
+						<div class="row category-caption">
+							<div class="col-lg-12">
+								<h2 class="pull-left">Upcoming Featured Events</h2>
+							</div>
+						</div>
+						<div class="row featured-events-carousel">
+							{/if}
+							<article class="">
+								<div class="picture">
+									<div class="category-image">
+										{if event_image}
+										<a href="{path='events/event'}/{event_id}/"><img src="{event_image:small}" class="img-responsive" alt="{event_title}" ></a>
+										{if:else}
+										<a href="{path='events/event'}/{event_id}/"><img src="/assets/images/demo_image.png" class="img-responsive" alt="{event_title}" ></a>
+										{/if}
+									</div>
+								</div>
+								<div class="detail">
+									<div class="caption"><a href="{path='events/event'}/{event_id}/">{event_title}</a></div>
+									<div class="info">
+										{event_start_date format="%F %j, %Y"}</br>
+										{if event_location}<span><i class="fa fa-map-marker"></i> {event_location}</span></br>{/if}
+									</div>
+								</div>
+							</article>
+							{if count == total_results}
+						</div>
+					</section>
+					{/if}
+					{/exp:calendar:events}
+					--}
+					{embed="global_embeds/special_section_home"}
+					{ad_bottom}
+				</div>
+				<div class="col-lg-4">
+					{embed="global_embeds/tabs_sidebar"}
+				</div>
+			</div>
+		</section>
+		{embed="global_embeds/new_footer"}
+	</div>
+	{js_footer}
+	{analytics}
+	{html_close}

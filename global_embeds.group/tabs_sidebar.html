@@ -1,0 +1,165 @@
+<div class="ad-300x250">
+	{ad_right_sidebar_1}
+</div>
+<div class="tabs">
+	<div role="tabpanel">
+		<ul class="nav nav-tabs nav-justified" role="tablist">
+			<li role="presentation" class="active"><a href="#join-us" aria-controls="popular" role="tab" data-toggle="tab">JOIN US</a></li>
+			<li role="presentation"><a href="#categories" aria-controls="popular" role="tab" data-toggle="tab">CATEGORIES</a></li>
+			{if segment_1 == "events"}
+			<li role="presentation"><a href="#events_month" aria-controls="popular" role="tab" data-toggle="tab">MONTHS</a></li>
+			{if:else}
+			<li role="presentation"><a href="#latest" aria-controls="popular" role="tab" data-toggle="tab">NEWS</a></li>
+			{/if}
+		</ul>
+		<div class="tab-content">
+			<div role="tabpanel" class="tab-pane active" id="join-us">
+				<div class="join-us">
+					<div class="extra-text">{sidebar_join_us_text}</div>
+					<div class="row">
+						{embed="global_embeds/aweber_web_form_generator" }
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<ul>
+								{sidebar_social_links}
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div role="tabpanel" class="tab-pane" id="categories">
+				{if segment_1 == "news"}
+				<div class="categories">
+					<ul class="cats">
+						{exp:channel:categories channel="news" style="linear" backspace="7" cache="yes" refresh="48000"}
+						<li><a href="{path='news'}">{category_name}</a></li>
+						{/exp:channel:categories}</ul>
+					</div>
+					{if:elseif segment_1 == "events"}
+					<div class="categories">
+						<ul class="cats">
+							{exp:gwcode_categories channel="calendar_events" style="linear"}
+							<li><a href="/events/category/{complete_path}">{cat_name}</a></li>
+							{/exp:gwcode_categories}
+						</ul>
+					</div>
+					{if:else}
+					<div class="categories">
+						<ul class="cats">
+							{if segment_2 != "category"}
+							{exp:channel:categories channel="business_listing" parent_only="yes" show_empty="yes" style="linear" parse="inward" cache="yes" refresh="48000"}
+							<li class="cat_business"><a href="{path='business'}">{category_name}</a></li>
+							{/exp:channel:categories}
+							{if:else}
+							{exp:channel:category_heading channel="business_listing" cache="yes" refresh="48000"}
+							{exp:gwcode_categories cat_id="{parent_id}" incl_self="no" show_empty="yes" style="linear"}
+							<li class="cat_business"><a href="{output_path}">{cat_name}</a></li>
+							{/exp:gwcode_categories}
+							{/exp:channel:category_heading}
+
+							{exp:channel:categories channel="business_listing" parent_only="yes" show_empty="yes" style="linear" parse="inward" cache="yes" refresh="48000"}
+							{if segment_3 == category_url_title}
+							{exp:gwcode_categories cat_id="{category_id}" incl_self="no" show_empty="yes" style="linear"}
+							<li class="cat_business"><a href="{output_path}">{cat_name}</a></li>
+							{/exp:gwcode_categories}
+							{/if}
+							{/exp:channel:categories}
+							{/if}
+						</ul>
+					</div>
+					{/if}
+				</div>
+				{if segment_1 == "events"}
+				<div role="tabpanel" class="tab-pane" id="events_month">
+					<div class="categories">
+						<ul class="cats">
+							{exp:calendar:month_list date_range_start="1 months ago" date_range_end="12 months" limit="100" cache="yes" refresh="48000"}
+							<li><a href="{path='events/month'}/{month format="%Y/%m"}/" class="{if is_current_month} list-group-item-warning{/if}">{month format="%F, %Y"}</a></li>
+							{/exp:calendar:month_list}
+						</ul>
+					</div>
+				</div>
+				{if:else}
+				<div role="tabpanel" class="tab-pane" id="latest">
+					<ul class="tabs-posts">
+						{exp:channel:entries channel="news" limit="5" status="open|featured|sponsored" disable="member_data|category_fields|pagination" dynamic="off" cache="yes" refresh="48000"}
+						<li>
+							{if news_image}<div class="pic"><img src="{news_image:tumb}" class="img-responsive" alt="{title}" ></div>{/if}
+							<div class="info">
+								<span class="date"><i class="fa fa-calendar-o"></i> {entry_date format="%m/%d/%Y"}</span>
+							</div>
+							<div class="caption"><a href="{url_title_path=news/detail}">{title}</a></div>
+						</li>
+						{/exp:channel:entries}
+					</ul>
+				</div>
+				{/if}
+			</div>
+		</div>
+	</div>
+	<div class="clearfix"></div>
+	<div class="featured-video">
+		<div class="row category-caption">
+			<div class="col-lg-12">
+				<h2 class="pull-left">SPONSORED ARTICLES</h2>
+			</div>
+		</div>
+		<div class="featured-video-carousel">
+			<!-- SLIDE 1 STARTS -->
+			{exp:channel:entries channel="news" limit="5" status="sponsored" disable="member_data|category_fields|pagination" dynamic="off" cache="yes" refresh="48000"}
+			<div>
+				<div class="picture">
+					<div class="category-image">
+						{if news_image}
+						<a href="{url_title_path=news/detail}"><img src="{news_image:slide}" class="img-responsive" alt="{title}" ></a>
+						{if:else}
+						<a href="{url_title_path=news/detail}"><img src="{theme_path}images/demo_image.png" class="img-responsive" alt="{title}" ></a>
+						{/if}
+					{!--	<div class="bg">&nbsp;</div>
+						 <h2 class="overlay-category">{categories}{category_name}{/categories}</h2> --}
+					</div>
+				</div>
+				{!--<div class="detail">
+					<div class="caption"><a href="{url_title_path=news/detail}">{title}</a></div>
+					<div class="info">
+						<span class="date"><i class="fa fa-calendar-o"></i> {entry_date format="%m/%d/%Y"}</span>
+					</div>
+				</div>--}
+			</div>
+			{/exp:channel:entries}
+			<!-- SLIDE 1 ENDS -->
+		</div>
+	</div>
+	<div class="ad-300x250">
+		{ad_right_sidebar_2}
+	</div>
+	{exp:calendar:events event_limit="6"
+	date_range_start="today"
+	date_range_end="today"
+	orderby="event_start_time"
+	dynamic="off"
+  cache="yes"
+	refresh="48000"}
+	{if count == "1"}
+	<div class="featured-video todays-events">
+		<div class="row category-caption">
+			<div class="col-lg-12">
+				<h2 class="pull-left">TODAY’s EVENTS</h2>
+			</div>
+		</div>
+
+		<div class="row"><div class="col-lg-12 todays-date"><h3>{current_time format="%l, %F %d, %Y"}</h3></div></div>
+		<div class="tab-pane">
+			<ul class="tabs-posts">
+				{/if}
+				<li>
+						<div class="info">{event_start_date format="%g:%i %a"}</div>
+					<div class="caption"><a href="{path='events/event'}/{event_id}/{if event_recurs}{event_start_date format="%Y/%m/%d"}/{/if}">{event_title}</a></div>
+				</li>
+				{if count == total_results}
+			</ul>
+		</div>
+	</div>
+	{/if}
+	{/exp:calendar:events}

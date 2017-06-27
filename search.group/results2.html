@@ -1,0 +1,85 @@
+{exp:super_search:results
+  orderby="channel_id+desc+date+desc"
+  sticky="off"
+  limit="6"
+  status="not closed|Moderated"
+
+}
+{if super_search_no_results}
+
+<div class="alert alert-warning" role="alert">
+  <p><strong>Sorry, no results matched the search terms you provided.</strong></p>
+</div>
+
+{/if}
+
+<div class="header-detail">
+
+  {if channel_name == 'calendar_events'}
+  <div>
+    <ul class="via">
+      <li>EVENTS</li>
+    </ul>
+    <div class="clearfix"></div>
+  </div>
+  {exp:calendar:events
+    require_entry="yes"
+    event_id="{entry_id}"
+    date_range_start="99 months ago"
+    show_months="999"
+    dynamic="off"
+    status="not closed|Moderated"
+  }
+  <div class="info">
+    <span class="date"><i class="fa fa-calendar-o"></i> <b>Date(s):</b>
+      {event_first_date format="%F %j, %Y"}
+      {if event_all_day}
+      (all day)
+      {if:else}
+      at {event_first_date format="%g:%i%a"}
+      {if event_never_ends}
+      (never ends)
+      {if:else}
+      {if "{event_first_date format='%Y%m%d%g%i%a'}" != "{event_last_date format='%Y%m%d%g%i%a'}"}
+      <b class="text-info">-</b>
+      {if "{event_first_date format='%Y%m%d'}" != "{event_last_date format='%Y%m%d'}"}
+      {event_last_date format="%F %j, %Y at %g:%i%a"}
+      {if:else}
+      {event_last_date format="%g:%i%a"}
+      {/if}
+      {/if}
+      {/if}
+      {/if}
+    </span>
+  </div>
+  {/exp:calendar:events}
+  <div class="caption"><a href="{path='events/event/{entry_id}'}">{title}</a></div>
+  <p>{exp:snippet total="60" word="true" ellipsis="..."}{event_summary}{/exp:snippet}</p>
+  {if:elseif channel_name == 'news'}
+  <div>
+    <ul class="via">
+      <li>NEWS</li>
+    </ul>
+    <div class="clearfix"></div>
+  </div>
+  <div class="info">
+    <span class="date"><i class="fa fa-calendar-o"></i> {entry_date format="%m/%d/%Y"}</span>
+  </div>
+  <div class="caption"><a href="{path='news/detail/{url_title}'}">{title}</a></div>
+  <p>{exp:snippet total="60" word="true" ellipsis="..."}{news_summary}{/exp:snippet}</p>
+  {if:elseif channel_name == 'business_listing'}
+  <div>
+    <ul class="via">
+      <li>BUSINESSES</li>
+    </ul>
+    <div class="clearfix"></div>
+  </div>
+  <div class="info">
+    <span class="date"><i class="fa fa-calendar-o"></i> {entry_date format="%m/%d/%Y"}</span>
+  </div>
+  <div class="caption"><a href="{path='business/detail/{url_title}'}">{title}</a></div>
+  <p><i class="fa fa-map-marker"></i> <span id="address">{business_listing_street_address}, {business_listing_city}, {business_listing_state} {business_listing_zip}</span></p>
+  {/if}
+</div>
+
+{/exp:super_search:results}
